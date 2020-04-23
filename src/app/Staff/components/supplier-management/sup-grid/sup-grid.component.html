@@ -1,0 +1,123 @@
+<div style="margin: 20px 0px 0px 0px;width: 70%;position: relative;">
+    <nz-steps nzType="navigation" nzSize="small" [nzCurrent]="step" (nzIndexChange)="onIndexChange(step)">
+        <nz-step nzTitle="查询" nzDescription="供应商信息." nzIcon="user">
+        </nz-step>
+        <nz-step nzTitle="查询" nzDescription="供应对象." nzIcon="file-search">
+        </nz-step>
+    </nz-steps>
+</div>
+
+<nz-spin [nzSpinning]="isSpinning" [nzDelay]="0">
+
+
+    <div class="gridBox" id="SupplierAgrid" style="display: block;">
+        <div class="btnBox">
+            <button nz-button [nzSize]="'small'" (click)='search()' nzType="primary" nzGhost>查询</button>
+            <button nz-button [nzSize]="'small'" (click)='toServices(1)' nzType="primary" nzGhost>供应详情</button>
+        </div>
+
+        <ag-grid-angular [enableCellTextSelection]="true" #SupplierAgrid style="width: 90%; height: 500px;" class="ag-theme-balham"
+            [rowData]="supplierList" [columnDefs]="columnDefsSup" rowSelection="multiple">
+        </ag-grid-angular>
+        <div style="display: flex;justify-content: center;margin: 10px 0px;">
+            <nz-pagination nzShowQuickJumper [(nzPageIndex)]="ind" [nzPageSize]="10" [nzTotal]="totalCount"
+                [nzSize]="'small'" (nzPageIndexChange)='IndexChange()'>
+            </nz-pagination>
+        </div>
+
+        <nz-modal [(nzVisible)]="isVisible" nzTitle="" (nzOnCancel)="cancel()" (nzOnOk)="toSupplier()" [nzOkText]='null'
+            [nzCancelText]='null' nzWidth='30rem'>
+
+            <h3><strong>查询供应商</strong></h3>
+            <div style="margin: 10px;">
+                <div class="Tips"
+                    style="display: flex;width: 100%;justify-content: center;justify-items: center;align-content: center;">
+                    <div style="display: flex;width: 85%;justify-content: center;align-items: center;">
+                        <input nz-input style="width: 100%;" [(ngModel)]="keySupplierName" placeholder="供应商名称(模糊匹配)"
+                            (keyup)="Enter($event)">
+                    </div>
+                    <span class="tooltiptext">供应商名称(模糊匹配)</span>
+                </div>
+                <div class="Tips"
+                    style="display: flex;width: 100%;justify-content: center;justify-items: center;align-content: center;">
+                    <div style="display: flex;width: 85%;justify-content: center;align-items: center;">
+                        <input nz-input style="width: 100%;" [(ngModel)]="keyAddress" placeholder="供应商地址(模糊匹配)"
+                            (keyup)="Enter($event)">
+                    </div>
+                    <span class="tooltiptext">供应商地址(模糊匹配)</span>
+                </div>
+            </div>
+            <div style="display: flex;justify-content: center;">
+                <button nz-button [nzSize]="'small'" (click)="cancel()"
+                    style="margin-top: 20px;margin-right: 10px;">取消</button>
+                <button nz-button [nzSize]="'small'" (click)="toSupplier()" nzType='primary'
+                    style="margin-top: 20px;margin-left: 10px;">确定</button>
+            </div>
+
+        </nz-modal>
+    </div>
+
+    <div class="gridBox" id="ServicesAgrid" style="display: none;margin-bottom: 30px;">
+        <div class="btnBox">
+            <button nz-button [nzSize]="'small'" (click)='search2()' nzType="primary" nzGhost>查询</button>
+            <button nz-button [nzSize]="'small'" (click)='onIndexChange(step)'>返回</button>
+        </div>
+
+        <ag-grid-angular [enableCellTextSelection]="true" #ServicesAgrid style="width: 90%; height: 500px;" class="ag-theme-balham"
+            [rowData]="servicesList" [columnDefs]="columnDefsSer" rowSelection="multiple">
+        </ag-grid-angular>
+        <!-- <div style="display: flex;justify-content: center;margin: 10px 0px;">
+            <nz-pagination nzShowQuickJumper [(nzPageIndex)]="ind2" [nzPageSize]="10" [nzTotal]="totalCount2"
+                [nzSize]="'small'" (nzPageIndexChange)='IndexChange2()'>
+            </nz-pagination>
+        </div> -->
+
+        <nz-modal [(nzVisible)]="isVisible2" nzTitle="" (nzOnCancel)="cancel()" (nzOnOk)="toServices(2)"
+            [nzOkText]='null' [nzCancelText]='null' nzWidth='30rem'>
+
+            <h3><strong>查询供应对象</strong></h3>
+            <div style="margin: 10px;">
+                <div class="Tips"
+                    style="display: flex;width: 100%;justify-content: center;justify-items: center;align-content: center;">
+                    <div style="display: flex;width: 85%;justify-content: center;align-items: center;">
+                        <input nz-input style="width: 100%;" [(ngModel)]="keySupplierName" placeholder="供应商名称(模糊匹配)"
+                            (keyup)="Enter($event)">
+                    </div>
+                    <span class="tooltiptext">供应商名称(模糊匹配)</span>
+                </div>
+                <div class="Tips"
+                    style="display: flex;width: 100%;justify-content: center;justify-items: center;align-content: center;">
+                    <div style="display: flex;width: 85%;justify-content: center;align-items: center;">
+                        <input nz-input style="width: 100%;" [(ngModel)]="keyFirName" placeholder="供应料品类别(模糊匹配)"
+                            (keyup)="Enter($event)">
+                    </div>
+                    <span class="tooltiptext">供应料品类别(模糊匹配)</span>
+                </div>
+                <div class="Tips"
+                    style="display: flex;width: 100%;justify-content: center;justify-items: center;align-content: center;">
+                    <div style="display: flex;width: 85%;justify-content: center;align-items: center;">
+                        <input nz-input style="width: 100%;" [(ngModel)]="keyOrgName" placeholder="供应组织名称(模糊匹配)"
+                            (keyup)="Enter($event)">
+                    </div>
+                    <span class="tooltiptext">供应组织名称(模糊匹配)</span>
+                </div>
+                <div class="Tips"
+                    style="display: flex;width: 100%;justify-content: center;justify-items: center;align-content: center;">
+                    <div style="display: flex;width: 85%;justify-content: center;align-items: center;">
+                        <input nz-input style="width: 100%;" [(ngModel)]="keyOrgSName" placeholder="供应组织简称(模糊匹配)"
+                            (keyup)="Enter($event)">
+                    </div>
+                    <span class="tooltiptext">供应组织简称(模糊匹配)</span>
+                </div>
+            </div>
+            <div style="display: flex;justify-content: center;">
+                <button nz-button [nzSize]="'small'" (click)="cancel()"
+                    style="margin-top: 20px;margin-right: 10px;">取消</button>
+                <button nz-button [nzSize]="'small'" (click)="toServices(2)" nzType='primary'
+                    style="margin-top: 20px;margin-left: 10px;">确定</button>
+            </div>
+
+        </nz-modal>
+    </div>
+
+</nz-spin>

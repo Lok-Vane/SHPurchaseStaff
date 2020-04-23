@@ -1,0 +1,105 @@
+#Tab {
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  box-shadow: #ddd 5px 5px 4px;
+}
+
+[nz-form] {
+  // max-width: 600px;
+  width: 30rem;
+  margin-right: 3rem;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+#Form1 {
+  // background-color: #efefef;
+  width: 90%;
+  // height: 500px;
+  // background-color: red;
+  border: 0.5px solid #ddd;
+  // border-radius: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  position: relative;
+  // box-shadow: #ddd 5px 5px 4px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  // width: 80%
+}
+
+#Form2 {
+  // width: 90%;
+  width: 100%;
+  border: 0.5px solid #ddd;
+  // margin-top: 20px;
+  margin-bottom: 20px;
+  position: relative;
+  // border-radius: 10px;
+}
+
+.formm1 {
+  width: 70%;
+  // display: flex;
+  // justify-content: center;
+  // align-content: center;
+  // background-color: aqua
+  position: relative;
+  left: 15%;
+}
+
+.formm2 {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  // background-color: aqua
+}
+
+.Tips .tooltiptext {
+  visibility: hidden;
+  width: auto;
+  background-color: #aaa;
+  color: #fff;
+  text-align: center;
+  padding: 2px;
+  // font-weight: 600;
+  border-radius: 6px;
+  /* 定位 */
+  position: absolute;
+  top: 40px;
+  z-index: 1;
+  opacity: 0.5;
+}
+
+.Tips:hover .tooltiptext {
+  visibility: visible;
+}
+
+.Tips {
+  position: relative;
+}
+
+nz-select {
+  width: 100%;
+}
+
+nz-spin {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+div {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+nz-step{
+  font-weight: 900;
+}
+

@@ -1,0 +1,170 @@
+<!-- 二次确认弹窗 -->
+<ng-template #iconTpl>
+    <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+</ng-template>
+
+<nz-spin [nzSpinning]="isSpinning" [nzDelay]="0">
+    <nz-tabset nzTabPosition='left'>
+
+        <nz-tab nzTitle="新增供应商">
+            <div style="width: 40%;margin: 20px 0px;position: relative;left: 30%;">
+
+                <div class="Tips"
+                    style="display: flex;width: 100%;justify-content: center;justify-items: center;align-content: center;">
+                    <div style="display: flex;width: 70%;justify-content: center;align-items: center;">
+                        <div style="color: red;font-weight: 500;font-size: small;">*&nbsp;</div>
+                        <input nz-input placeholder="创建供应商名称" oninput="value=value.replace(/\s+/g,'')"
+                            [(ngModel)]="supplierInfoAdd.supplierName" />
+                    </div>
+                    <span class="tooltiptext">创建供应商名称(必填)</span>
+                </div>
+
+                <div class="Tips"
+                    style="display: flex;width: 100%;justify-content: center;justify-items: center;align-content: center;">
+                    <div style="display: flex;width: 70%;justify-content: center;align-items: center;">
+                        <div style="color: red;font-weight: 500;font-size: small;">*&nbsp;</div>
+                        <input nz-input placeholder="邮箱" oninput="value=value.replace(/\s+/g,'')"
+                            [(ngModel)]="supplierInfoAdd.email" />
+                    </div>
+                    <span class="tooltiptext">邮箱(必填)</span>
+                </div>
+
+                <div class="Tips"
+                    style="display: flex;width: 100%;justify-content: center;justify-items: center;align-content: center;">
+                    <div style="display: flex;width: 70%;justify-content: center;align-items: center;">
+                        <div style="color: red;font-weight: 500;font-size: small;">*&nbsp;</div>
+                        <input nz-input placeholder="手机号码(用于登录)" maxlength="11"
+                            onkeyup="this.value=this.value.replace(/\D/g,'')" [(ngModel)]="supplierInfoAdd.phone" />
+                    </div>
+                    <span class="tooltiptext">手机号码(必填)</span>
+                </div>
+
+                <div class="Tips"
+                    style="display: flex;width: 100%;justify-content: center;justify-items: center;align-content: center;">
+                    <div style="display: flex;width: 70%;justify-content: center;align-items: center;">
+                        <div style="color: red;font-weight: 500;font-size: small;">*&nbsp;</div>
+                        <input nz-input placeholder="初始密码" type="password"
+                            [(ngModel)]="supplierInfoAdd.password_Sup" />
+                    </div>
+                    <span class="tooltiptext">初始密码(必填)</span>
+                </div>
+
+                <div class="Tips"
+                    style="display: flex;width: 100%;justify-content: center;justify-items: center;align-content: center;">
+                    <div style="display: flex;width: 70%;justify-content: center;align-items: center;">
+                        <div style="color: red;font-weight: 500;font-size: small;">&nbsp;&nbsp;</div>
+                        <input nz-input placeholder="组织机构代码证号" oninput="value=value.replace(/\s+/g,'')"
+                            [(ngModel)]="supplierInfoAdd.orgLicenseNo" />
+                    </div>
+                    <span class="tooltiptext">组织机构代码证号</span>
+                </div>
+
+                <div class="Tips"
+                    style="display: flex;width: 100%;justify-content: center;justify-items: center;align-content: center;">
+                    <div style="display: flex;width: 70%;justify-content: center;align-items: center;">
+                        <div style="color: red;font-weight: 500;font-size: small;">&nbsp;&nbsp;</div>
+                        <input nz-input placeholder="营业执照" oninput="value=value.replace(/\s+/g,'')"
+                            [(ngModel)]="supplierInfoAdd.businessLicense" />
+                    </div>
+                    <span class="tooltiptext">营业执照</span>
+                </div>
+
+                <div class="Tips"
+                    style="display: flex;width: 100%;justify-content: center;justify-items: center;align-content: center;">
+                    <div style="display: flex;width: 70%;justify-content: center;align-items: center;">
+                        <div style="color: red;font-weight: 500;font-size: small;">&nbsp;&nbsp;</div>
+                        <input nz-input placeholder="地址" oninput="value=value.replace(/\s+/g,'')"
+                            [(ngModel)]="supplierInfoAdd.address_Sup" />
+                    </div>
+                    <span class="tooltiptext">地址</span>
+                </div>
+
+                <div class="Tips"
+                    style="display: flex;width: 100%;justify-content: center;justify-items: center;align-content: center;">
+                    <div style="display: flex;width: 70%;justify-content: center;align-items: center;">
+                        <div style="color: red;font-weight: 500;font-size: small;">&nbsp;&nbsp;</div>
+                        <input nz-input placeholder="备注" oninput="value=value.replace(/\s+/g,'')"
+                            [(ngModel)]="supplierInfoAdd.remark" />
+                    </div>
+                    <span class="tooltiptext">备注(默认为无)</span>
+                </div>
+
+                <div class="Tips"
+                    style="display: flex;width: 100%;justify-content: center;justify-items: center;align-content: center;">
+                    <div style="display: flex;width: 70%;justify-content: center;align-items: center;">
+                        <div style="color: #999;">是否创建供应对象：</div>
+                        <nz-switch [(ngModel)]="ifCreateSupplierservices" nzCheckedChildren="是"
+                            nzUnCheckedChildren="否"></nz-switch>
+                    </div>
+                    <span class="tooltiptext">是否为新增供应商创建供应对象</span>
+                </div>
+
+                <span *ngIf="ifCreateSupplierservices">
+
+                    <ng-container *ngFor="let item of SupplierservicesCreates;let i = index">
+
+                        <div class="Tips"
+                            style="display: flex;width: 100%;justify-content: center;justify-items: center;align-content: center;">
+                            <div style="display: flex;width: 70%;justify-content: center;align-items: center;">
+                                •&nbsp;
+                                <nz-select style="width: 100%;" nzPlaceHolder="供应料品类"
+                                    [(ngModel)]="SupplierservicesCreates[i].oneCategoryId"
+                                    (ngModelChange)='bindOneCategory(i)' nzAllowClear=true>
+                                    <ng-container *ngFor="let item of categoryFirstList;let j = index">
+                                        <nz-option nzValue="{{item.bizId}}" nzLabel="{{item.categoryFirName}}">
+                                        </nz-option>
+                                    </ng-container>
+                                </nz-select>
+                            </div>
+                            <span class="tooltiptext">供应料品类</span>
+                        </div>
+
+                        <div class="Tips"
+                            style="display: flex;width: 100%;justify-content: center;justify-items: center;align-content: center;">
+                            <div style="display: flex;width: 70%;justify-content: center;align-items: center;">
+                                &nbsp;&nbsp;
+                                <nz-select style="width: 100%;" [(ngModel)]="SupplierservicesCreates[i].orgInfos"
+                                    nzMode="multiple" nzPlaceHolder="供应组织" nzAllowClear=true>
+                                    <nz-option *ngFor="let option of orgList"
+                                        [nzLabel]="'【' + option.orgSName + '】' + option.orgName" [nzValue]="option">
+                                    </nz-option>
+                                </nz-select>
+                            </div>
+                            <span class="tooltiptext">供应组织</span>
+                        </div>
+
+                    </ng-container>
+
+                    <div style="display: flex;justify-content: center;" *ngIf="ifCreateSupplierservices">
+                        <div style="display: flex;">
+                            <button nz-popconfirm nzPopconfirmTitle="确定要删除这条数据吗？" [nzIcon]="iconTpl"
+                                (nzOnConfirm)="sub()" [nzSize]="'small'" (nzOnCancel)="cancel()" nzType="danger" nzGhost
+                                nz-tooltip nzTooltipTitle="删除一条供应对象数据" *ngIf="SupplierservicesCreates.length!==1"
+                                style="margin: 0px 0px 30px 15px" nz-button nzShape="circle"><i nz-icon nzType="minus"
+                                    nzTheme="outline"></i></button>
+
+                            <button nzType='primary' nzGhost nzGhost nz-tooltip nzTooltipTitle="新增一条供应对象数据"
+                                [nzSize]="'small'" style="margin: 0px 0px 30px 15px" (click)="add()" nz-button
+                                nzShape="circle" [nzSize]=''><i nz-icon nzType="plus" nzTheme="outline"></i></button>
+                        </div>
+                    </div>
+
+                </span>
+
+                <div
+                    style="display: flex;width: 100%;justify-content: center;justify-items: center;align-content: center;">
+                    <button nz-button nzType="primary" nz-popconfirm nzPopconfirmTitle="请确认信息填写无误！" [nzIcon]="iconTpl"
+                        (nzOnConfirm)="supplier_add()" (nzOnCancel)="cancel()" [nzSize]="'small'">提交</button>
+                </div>
+
+            </div>
+        </nz-tab>
+
+        <nz-tab nzTitle="查询供应商">
+            <span style="position: relative;left: 5%;">
+                <app-sup-grid></app-sup-grid>
+            </span>
+        </nz-tab>
+
+    </nz-tabset>
+</nz-spin>
