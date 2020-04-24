@@ -136,7 +136,35 @@ export class NewProjectComponent implements OnInit {
 
   bindCategorySelect() {
     this.createProjectName();
-    this.FindCategorySecond(this.shared.Form1.category);
+    if (this.shared.Form1.category !== null && this.shared.Form1.category !== '') {
+      this.FindCategorySecond(this.shared.Form1.category);
+    } else {
+      this.message.create('warning', '材料分类为空！');
+      this.shared.categorySecondList = [];
+      for (let i = 0; i < this.shared.Form2.length; i++) {
+        this.shared.Form2[i] = {
+          secCode: null,
+          productList: [],
+          productCode: null,
+          productName: null,
+          specifications: null,
+          metering: null,
+          purchaseNum: 0,
+          dropPrice: 0,
+          highestLimit: 0,
+          distribute1: 0,
+          distribute2: 0,
+          distribute3: 0,
+          // errorLimit: 0,
+          reserve1: null,
+          reserve2: null,
+          reserve3: null,
+          reserve4: null,
+          reserve5: null,
+          remark: null
+        };
+      }
+    }
   }
 
   // 查询组织列表
@@ -299,90 +327,101 @@ export class NewProjectComponent implements OnInit {
 
   // 查询二级的下属产品
   FindProductList(index: number) {
-    this.isSpinning = true;
-    const postData = {
-      queryFields: '',
-      queryWhere: [
-        {
-          fieldName: 'categorySecCode',
-          operator: 'Equal',
-          fieldValue: this.shared.Form2[index].secCode
-        },
-        {
-          fieldName: 'state',
-          operator: 'Equal',
-          fieldValue: 1
-        }
-      ],
-      queryOrder: 'productName',
-    };
-    this.dao.doPostRequest(this.SHPurchase.PurchaseProSearch, postData).subscribe((res: any) => {
-      this.shared.Form2[index].productList = res.data.dataList;
-      this.isSpinning = false;
+    if (this.shared.Form2[index].secCode !== null && this.shared.Form2[index].secCode !== '') {
+      this.isSpinning = true;
+      const postData = {
+        queryFields: '',
+        queryWhere: [
+          {
+            fieldName: 'categorySecCode',
+            operator: 'Equal',
+            fieldValue: this.shared.Form2[index].secCode
+          },
+          {
+            fieldName: 'state',
+            operator: 'Equal',
+            fieldValue: 1
+          }
+        ],
+        queryOrder: 'productName',
+      };
+      this.dao.doPostRequest(this.SHPurchase.PurchaseProSearch, postData).subscribe((res: any) => {
+        this.shared.Form2[index].productList = res.data.dataList;
+        this.isSpinning = false;
+      }, (err: any) => {
+        console.log(err);
+        this.isSpinning = false;
+      });
+    } else {
+      this.shared.Form2[index].productList = [];
+    }
 
-      this.shared.Form2[index].productCode = null;
-      this.shared.Form2[index].productName = null;
-      this.shared.Form2[index].specifications = null;
-      this.shared.Form2[index].metering = null;
-      this.shared.Form2[index].purchaseNum = 0;
-      this.shared.Form2[index].dropPrice = 0;
-      this.shared.Form2[index].highestLimit = 0;
-      this.shared.Form2[index].distribute1 = 0;
-      this.shared.Form2[index].distribute2 = 0;
-      this.shared.Form2[index].distribute3 = 0;
-      // this.shared.Form2[index].errorLimit = 0;
-      this.shared.Form2[index].remark = null;
-      this.shared.Form2[index].reserve1 = null;
-      this.shared.Form2[index].reserve2 = null;
-      this.shared.Form2[index].reserve3 = null;
-      this.shared.Form2[index].reserve4 = null;
-      this.shared.Form2[index].reserve5 = null;
+    this.shared.Form2[index].productCode = null;
+    this.shared.Form2[index].productName = null;
+    this.shared.Form2[index].specifications = null;
+    this.shared.Form2[index].metering = null;
+    this.shared.Form2[index].purchaseNum = 0;
+    this.shared.Form2[index].dropPrice = 0;
+    this.shared.Form2[index].highestLimit = 0;
+    this.shared.Form2[index].distribute1 = 0;
+    this.shared.Form2[index].distribute2 = 0;
+    this.shared.Form2[index].distribute3 = 0;
+    // this.shared.Form2[index].errorLimit = 0;
+    this.shared.Form2[index].remark = null;
+    this.shared.Form2[index].reserve1 = null;
+    this.shared.Form2[index].reserve2 = null;
+    this.shared.Form2[index].reserve3 = null;
+    this.shared.Form2[index].reserve4 = null;
+    this.shared.Form2[index].reserve5 = null;
 
-      // //console.log(this.Form2[index].productList)
-      // //console.log(res)
-    }, (err: any) => {
-      console.log(err);
-      this.isSpinning = false;
-      // this.message.create('warning', err.error.message);
-    });
   }
 
   // 查询单个产品
   FindProduct(index: string) {
-    // console.log(this.shared.Form2[index].productCode)
-    this.isSpinning = true;
-    const postData = {
-      queryFields: '',
-      queryWhere: [
-        {
-          fieldName: 'code',
-          operator: 'Equal',
-          fieldValue: this.shared.Form2[index].productCode
-        },
-        {
-          fieldName: 'state',
-          operator: 'Equal',
-          fieldValue: 1
-        }
-      ],
-      queryOrder: 'productName',
-    };
-    this.dao.doPostRequest(this.SHPurchase.PurchaseProSearch, postData).subscribe((res: any) => {
-      this.isSpinning = false;
-      // console.log(res.data.dataList[0]);
-      this.shared.Form2[index].specifications = res.data.dataList[0].specifications;
-      this.shared.Form2[index].metering = res.data.dataList[0].metering;
-      this.shared.Form2[index].productName = res.data.dataList[0].productName;
+    if (this.shared.Form2[index].productCode !== null && this.shared.Form2[index].productCode !== '') {
+      this.isSpinning = true;
+      const postData = {
+        queryFields: '',
+        queryWhere: [
+          {
+            fieldName: 'code',
+            operator: 'Equal',
+            fieldValue: this.shared.Form2[index].productCode
+          },
+          {
+            fieldName: 'state',
+            operator: 'Equal',
+            fieldValue: 1
+          }
+        ],
+        queryOrder: 'productName',
+      };
+      this.dao.doPostRequest(this.SHPurchase.PurchaseProSearch, postData).subscribe((res: any) => {
+        this.isSpinning = false;
+        // console.log(res.data.dataList[0]);
+        this.shared.Form2[index].specifications = res.data.dataList[0].specifications;
+        this.shared.Form2[index].metering = res.data.dataList[0].metering;
+        this.shared.Form2[index].productName = res.data.dataList[0].productName;
+        this.shared.Form2[index].reserve1 = null;
+        this.shared.Form2[index].reserve2 = null;
+        this.shared.Form2[index].reserve3 = null;
+        this.shared.Form2[index].reserve4 = null;
+        this.shared.Form2[index].reserve5 = null;
+      }, (err: any) => {
+        console.log(err);
+        this.isSpinning = false;
+      });
+    } else {
+      this.shared.Form2[index].specifications = null;
+      this.shared.Form2[index].metering = null;
+      this.shared.Form2[index].productName = null;
       this.shared.Form2[index].reserve1 = null;
       this.shared.Form2[index].reserve2 = null;
       this.shared.Form2[index].reserve3 = null;
       this.shared.Form2[index].reserve4 = null;
       this.shared.Form2[index].reserve5 = null;
-    }, (err: any) => {
-      console.log(err);
-      this.isSpinning = false;
-      // this.message.create('warning', err.error.message);
-    });
+    }
+
   }
 
   cancel() {
