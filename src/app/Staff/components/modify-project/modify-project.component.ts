@@ -28,6 +28,7 @@ export class ModifyProjectComponent implements OnInit {
 
   successData;
   settlementList = [];
+  paymentList: any = [];
 
   endTimeList: any = [
     { Label: '30分钟后', Value: 30 },
@@ -154,6 +155,8 @@ export class ModifyProjectComponent implements OnInit {
         // this.message.create('warning', err1.error.message);
       });
 
+      this.FindPaymentList();
+
     }, (err: any) => {
       console.log(err);
       this.isSpinning = false;
@@ -184,6 +187,30 @@ export class ModifyProjectComponent implements OnInit {
       // this.message.create('warning', err.error.message);
     });
 
+  }
+
+  // 查询付款列表
+  FindPaymentList() {
+    this.dao.doPostRequest(this.SHPurchase.PurchaseDicSearch, {
+      queryWhere: [
+        {
+          fieldName: 'classify',
+          operator: 'Equal',
+          fieldValue: 2
+        },
+        {
+          fieldName: 'state',
+          operator: 'Equal',
+          fieldValue: 1
+        }
+      ]
+    }).subscribe((res: any) => {
+      this.paymentList = res.data.dataList;
+      // //console.log(res1);
+    }, (err: any) => {
+      // console.log(err);
+      // this.message.create('warning', err.error.message);
+    });
   }
 
   // 日期格式化

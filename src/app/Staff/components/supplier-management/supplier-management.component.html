@@ -107,7 +107,7 @@
                             style="display: flex;width: 100%;justify-content: center;justify-items: center;align-content: center;">
                             <div style="display: flex;width: 70%;justify-content: center;align-items: center;">
                                 •&nbsp;
-                                <nz-select style="width: 100%;" nzPlaceHolder="供应料品类"
+                                <nz-select style="width: 100%;" nzPlaceHolder="供应材料类"
                                     [(ngModel)]="SupplierservicesCreates[i].oneCategoryId"
                                     (ngModelChange)='bindOneCategory(i)' nzAllowClear=true>
                                     <ng-container *ngFor="let item of categoryFirstList;let j = index">
@@ -116,7 +116,7 @@
                                     </ng-container>
                                 </nz-select>
                             </div>
-                            <span class="tooltiptext">供应料品类</span>
+                            <span class="tooltiptext">供应材料类</span>
                         </div>
 
                         <div class="Tips"

@@ -97,10 +97,16 @@
                             </div>
                         </th>
                         <th nzWidth="100px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;">
+                                <strong style="color: red;">*&nbsp;</strong>
+                                <span>付款方式</span>
+                            </div>
+                        </th>
+                        <th nzWidth="100px">
                             <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
                                 nz-tooltip nzTooltipTitle="税率为0%，即默认供应商自定" nzTooltipPlacement="top">
                                 <span style="color: red;font-size: large;font-weight: 500;">&nbsp;</span>
-                                <span>料品税率</span>
+                                <span>材料税率</span>
                             </div>
                         </th>
                         <th nzWidth="100px">
@@ -180,12 +186,21 @@
                         </td>
                         <td>
                             <nz-input-number style="width: 100px;" [(ngModel)]="shared.Form2Copy[i].dropPrice"
-                                [nzMin]="0" [nzStep]="1" [nzFormatter]="formatterRMB" [nzParser]="parserRMB"></nz-input-number>
+                                [nzMin]="0" [nzStep]="1" [nzFormatter]="formatterRMB" [nzParser]="parserRMB">
+                            </nz-input-number>
                         </td>
                         <td>
                             <nz-select style="width: 100px;" [(ngModel)]="shared.Form2Copy[i].reserve3"
                                 nzAllowClear=true nz-tooltip nzTooltipTitle="结算方式为空，即默认供应商自定" nzTooltipPlacement="top">
                                 <ng-container *ngFor="let item of settlementList;let j = index">
+                                    <nz-option nzValue="{{item.value}}" nzLabel="{{item.value}}">
+                                    </nz-option>
+                                </ng-container>
+                            </nz-select>
+                        </td>
+                        <td>
+                            <nz-select style="width: 100px;" [(ngModel)]="shared.Form2Copy[i].reserve5">
+                                <ng-container *ngFor="let item of paymentList;let j = index">
                                     <nz-option nzValue="{{item.value}}" nzLabel="{{item.value}}">
                                     </nz-option>
                                 </ng-container>
@@ -207,7 +222,8 @@
                         </td>
                         <td>
                             <nz-input-number style="width: 100px;" [(ngModel)]="shared.Form2Copy[i].highestLimit"
-                                [nzMin]="0" [nzStep]="1" [nzFormatter]="formatterRMB" [nzParser]="parserRMB"></nz-input-number>
+                                [nzMin]="0" [nzStep]="1" [nzFormatter]="formatterRMB" [nzParser]="parserRMB">
+                            </nz-input-number>
                         </td>
                         <td>
                             <nz-input-number style="width: 130px;" [(ngModel)]="shared.Form2Copy[i].distribute1"

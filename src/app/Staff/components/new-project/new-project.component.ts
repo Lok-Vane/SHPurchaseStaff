@@ -548,7 +548,7 @@ export class NewProjectComponent implements OnInit {
         finalTime: this.dateType(new Date(), 1),
         contentDtos
       };
-      console.log(postData);
+      // console.log(postData);
       this.dao.doPostRequest(this.SHPurchase.PurchaseBidCreate, postData).subscribe((res: any) => {
         this.successData = res.data;
         this.step++;

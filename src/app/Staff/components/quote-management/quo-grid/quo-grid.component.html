@@ -1,8 +1,8 @@
 <div style="margin: 20px 0px 0px 0px;width: 70%;position: relative;">
     <nz-steps nzType="navigation" nzSize="small" [nzCurrent]="step" (nzIndexChange)="onIndexChange($event)">
-        <nz-step nzTitle="查询" nzDescription="料品一级分类." nzIcon="file-search">
+        <nz-step nzTitle="查询" nzDescription="材料一级分类." nzIcon="file-search">
         </nz-step>
-        <nz-step nzTitle="查询" nzDescription="料品二级分类." nzIcon="file-search">
+        <nz-step nzTitle="查询" nzDescription="材料二级分类." nzIcon="file-search">
         </nz-step>
         <nz-step nzTitle="查询" nzDescription="产品档案." nzIcon="file-search">
         </nz-step>
@@ -29,7 +29,7 @@
         <nz-modal [(nzVisible)]="isVisible1" nzTitle="" (nzOnCancel)="cancel()" (nzOnOk)="toFir()" [nzOkText]='null'
             [nzCancelText]='null' nzWidth='30rem'>
 
-            <h3><strong>查询料品一级分类</strong></h3>
+            <h3><strong>查询材料一级分类</strong></h3>
             <div style="margin: 10px;">
                 <div class="Tips"
                     style="display: flex;width: 100%;justify-content: center;justify-items: center;align-content: center;">
@@ -66,7 +66,7 @@
         <nz-modal [(nzVisible)]="isVisible2" nzTitle="" (nzOnCancel)="cancel()" (nzOnOk)="toSec(2)" [nzOkText]='null'
             [nzCancelText]='null' nzWidth='30rem'>
 
-            <h3><strong>查询料品二级分类</strong></h3>
+            <h3><strong>查询材料二级分类</strong></h3>
             <div style="margin: 10px;">
                 <div class="Tips"
                     style="display: flex;width: 100%;justify-content: center;justify-items: center;align-content: center;">
