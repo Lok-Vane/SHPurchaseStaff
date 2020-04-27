@@ -38,6 +38,7 @@ export class SHPurchaseSettinggService {
     public readonly PurchaseBidSearchSup = `${this.baseUrl}/biddingproject/suppliersearch`;  // 招标项目详情 供应商
     public readonly PurchaseBidModify = `${this.baseUrl}/biddingproject/modify`;  // 招标项目修改 内部
     public readonly PurchaseBidCreate = `${this.baseUrl}/biddingproject/create`;  // 招标项目创建 内部
+    public readonly PurchaseBidDelete = `${this.baseUrl}/biddingproject/delete`;  // 招标项目删除 内部
 
     public readonly PurchaseDicSearch = `${this.baseUrl}/dictionary/search`;  // 数据字典查询
     public readonly PurchaseDicCreate = `${this.baseUrl}/dictionary/create`;  // 数据字典创建

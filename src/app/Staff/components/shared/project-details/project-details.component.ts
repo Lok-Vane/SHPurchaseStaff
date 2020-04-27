@@ -231,7 +231,7 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
   }
 
   delete() {
-    this.dao.doPostRequest(this.SHPurchase.PurchaseFirByCode, { bizId: this.data.bizId }).subscribe((res: any) => {
+    this.dao.doPostRequest(this.SHPurchase.PurchaseBidDelete, { bizId: this.data.bizId }).subscribe((res: any) => {
       // this.message.create('success', res.message);
       this.router.navigateByUrl('/index');
     }, (err: any) => {
