@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', loadChildren: () => import('./Staff/Staff.module').then(m => m.StaffModule) }
+  { path: 'epu', loadChildren: () => import('./epurchase/epurchase.module').then(m => m.EPurchaseModule) }
 ];
 
 @NgModule({

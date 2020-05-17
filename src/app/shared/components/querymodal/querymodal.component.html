@@ -1,0 +1,25 @@
+<nz-modal nzMaskClosable="false" [nzVisible]="isVisible" [nzTitle]="queryFormTitle" nzOkText="查询"
+    (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <form nz-form class="ls-list-form-formarea" nzGutter="8" [formGroup]="queryFormGroup">
+        <ng-container *ngFor="let item of queryFormItems">
+            <nz-form-item>
+                <nz-form-label [nzFor]="item.field" nzSpan="8">{{item.label}}</nz-form-label>
+                <nz-form-control nzSpan="15">
+                    <input *ngIf="item.type==='INPUT'" nz-input [id]="item.field" [formControlName]="item.field"
+                        [placeholder]="item.placeholder">
+                    <nz-date-picker *ngIf="item.type==='DATEPICKER'" [formControlName]="item.field" [id]="item.field"
+                        [nzPlaceHolder]="item.placeholder" [nzFormat]="item.format">
+                    </nz-date-picker>
+                    <nz-select *ngIf="item.type==='SELECT'" [formControlName]="item.field" [id]="item.field"
+                        nzAllowClear [nzPlaceHolder]="item.placeholder">
+                        <ng-container *ngFor="let option of item.optionlist">
+                            <nz-option [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+                        </ng-container>
+                    </nz-select>
+                    <label *ngIf="item.type==='CHECKBOX'" nz-checkbox [formControlName]="item.field"
+                        [id]="item.field"></label>
+                </nz-form-control>
+            </nz-form-item>
+        </ng-container>
+    </form>
+</nz-modal>

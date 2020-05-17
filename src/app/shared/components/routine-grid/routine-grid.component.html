@@ -1,0 +1,45 @@
+<div class="ls-grid">
+    <div class="ls-grid-gridarea">
+        <ng-container *ngIf="totalCount > 0; else elseTemplate">
+            <ag-grid-angular 
+            style="width: 100%; height: 100%;" 
+            class="ag-theme-balham" 
+            suppressLoadingOverlay="true"
+            suppressNoRowsOverlay="true"
+            suppressContextMenu="true"
+            enableCellTextSelection="true"
+            [rowData]="dataScource"                
+            [localeText]="localeText" 
+            [columnDefs]="columnDefs" 
+            [rowSelection]="rowSelectType"
+            [defaultColDef]="defaultColDef"
+            (gridReady)="onGridReady($event)" 
+            (selectionChanged)="onGridSelectionChanged()">
+            </ag-grid-angular>
+        </ng-container>
+        <ng-template #elseTemplate>
+            <div style="height: 100%;display:flex;align-items: center;justify-content: center;">
+                <nz-empty></nz-empty>
+            </div>
+        </ng-template>
+    </div>
+    <!-- <div>
+
+    </div> -->
+    <nz-pagination *ngIf="totalCount > 0" 
+        class="ls-grid-pagingarea" 
+        nzShowQuickJumper 
+        [(nzPageIndex)]="pageIndex" 
+        [nzTotal]="totalCount"
+        [nzSize]="'small'" 
+        nzShowSizeChanger 
+        [(nzPageSize)]="pageSize" 
+        [nzPageSizeOptions]="pageSizeOptions"
+        [nzShowTotal]="rangeTemplate" 
+        (nzPageIndexChange)="onPageIndexChange($event)"
+        (nzPageSizeChange)="onPageSizeChange($event)">
+    </nz-pagination>
+    <ng-template #rangeTemplate let-range="range" let-total>
+        当前显示第 {{ range[0] }} 到 {{ range[1] }}条 总计 {{ total }} 条
+    </ng-template>
+</div>

@@ -1,0 +1,58 @@
+<nz-modal [(nzVisible)]="isVisible" [nzStyle]="{ top: '20px' }" nzWidth="768" [nzTitle]="findFormTitle"
+    (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <div class="ls-find-form">
+        <form class="ls-find-form-cond" nz-form>
+            <div nz-row [nzGutter]="8">
+                <div nz-col nzSpan="10">
+                    <nz-form-item nzFlex>
+                        <nz-form-label>栏目</nz-form-label>
+                        <nz-form-control>
+                            <!-- <nz-select nzAllowClear=true name="myselect" nzSize="small" style="width: 260px;"
+                                [(ngModel)]="curSelectOption" (ngModelChange)="provinceChange($event)"
+                                nzPlaceHolder="Choose">
+                                <ng-container *ngFor="let option of findFormSelectOptions">
+                                    <nz-option [nzValue]="option.field" [nzLabel]="option.label"></nz-option>
+                                </ng-container>
+                            </nz-select> -->
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col nzSpan="12">
+                    <nz-form-item nzFlex>
+                        <nz-form-label>值</nz-form-label>
+                        <nz-form-control>
+                            <input nz-input nzSize="small" style="width: 314px;" placeholder="">
+                            <!-- <nz-date-picker *ngIf="curSelectOption && curSelectOption.type==='DATE'"></nz-date-picker> -->
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col nzSpan="2">
+                    <nz-form-item nzFlex>
+                        <nz-form-control>
+                            <button nz-button nzSize="small" nzType="primary">查找</button>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+
+        </form>
+        <div class="ls-find-form-oprat">
+            <nz-radio-group style="width: 100%;">
+                <label style="margin: 0px 40px;" nz-radio nzValue="leftlike">开头是</label>
+                <label style="margin: 0px 40px;" nz-radio nzValue="rightlike">结束是</label>
+                <label style="margin: 0px 40px;" nz-radio nzValue="contains">包含</label>
+                <label style="margin: 0px 40px;" nz-radio nzValue="notcontains">不包含</label>
+                <label style="margin: 0px 40px;" nz-radio nzValue="equals">等于</label>
+            </nz-radio-group>
+        </div>
+        <div class="ls-find-form-list">
+            <ag-grid-angular style="width: 100%; height: 100%;" class="ag-theme-balham" [rowData]="rowData"
+                [localeText]="localeText" [columnDefs]="columnDefs" rowSelection="multiple"
+                (gridReady)="onGridReady($event)">
+            </ag-grid-angular>
+        </div>
+        <nz-pagination nzSize="small" class="ls-find-form-pag" [nzShowQuickJumper]="true" [nzShowSizeChanger]="true"
+            [nzPageIndex]="3" [nzTotal]="500" nzShowSizeChanger [nzPageSize]="10">
+        </nz-pagination>
+    </div>
+</nz-modal>

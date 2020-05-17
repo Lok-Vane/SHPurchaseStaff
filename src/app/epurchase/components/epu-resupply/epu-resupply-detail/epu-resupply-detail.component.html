@@ -1,0 +1,32 @@
+<div class="resupply-detail">
+    <div class="resupply-detail-btnarea">
+        <app-toolbar (sendClick)="subscribeClick($event)"></app-toolbar>
+    </div>
+    <div class="resupply-detail-supplierquery">
+        <input nz-input style="width: 60%; margin-right: 20px;" [(ngModel)]="supplierFilterValue" oninput="value=value.replace(/\s+/g,'')"/>
+        <button nz-button nzType="default" (click)="doFilterSupplier()" [nzSize]="controlSize" nzType="primary">查询</button>
+    </div>
+    <nz-page-header class="resupply-detail-suppliertitle" nzSubtitle="供应商列表"> </nz-page-header>
+    <div class="resupply-detail-supplierlist">
+        <app-routine-grid #supplierGrid [columnDefs]="supplierColDefs" rowSelectType=""
+            (sendSelectChange)="supplierSelectChange($event)"></app-routine-grid>
+    </div>
+    <div class="resupply-detail-fircategoryquery">
+        <input nz-input style="width: 60%; margin-right: 20px;" [(ngModel)]="fircategoryFilterValue" oninput="value=value.replace(/\s+/g,'')"/>
+        <button nz-button nzType="default" (click)="doFilterFirCategory()" [nzSize]="controlSize" nzType="primary">查询</button>
+    </div>
+    <nz-page-header class="resupply-detail-fircategorytitle" nzSubtitle="一级分类列表"> </nz-page-header>
+    <div class="resupply-detail-fircategorylist">
+        <app-routine-grid #fircategoryGrid [columnDefs]="fircategoryColDefs" rowSelectType=""
+            (sendSelectChange)="fircategorySelectChange($event)"></app-routine-grid>
+    </div>
+    <div class="resupply-detail-organizequery">
+        <input nz-input style="width: 60%; margin-right: 20px;" [(ngModel)]="organizeFilterValue" oninput="value=value.replace(/\s+/g,'')"/>
+        <button nz-button nzType="default" (click)="doFilterOrganize()" [nzSize]="controlSize" nzType="primary">查询</button>
+    </div>
+    <nz-page-header class="resupply-detail-organizetitle" nzSubtitle="供应组织列表"> </nz-page-header>
+    <div class="resupply-detail-organizelist">
+        <app-routine-grid #organizeGrid [columnDefs]="organizeColDefs" rowSelectType="multiple"
+            (sendSelectChange)="organizeSelectChange($event)"></app-routine-grid>
+    </div>
+</div>

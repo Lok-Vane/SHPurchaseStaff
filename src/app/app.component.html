@@ -1,1 +1,34 @@
-<app-shpurchasestaff></app-shpurchasestaff>
+<div style="display: flex;">
+    <ul nz-menu nzMode="inline" style="width: 15%;">
+        <li nz-submenu nzTitle="采购管理系统" nzOpen=true>
+            <ul>
+                <li nz-submenu nzTitle="基础档案" nzOpen=true>
+                    <ul>
+                        <li nz-menu-item routerLink='/epu/fircategory' nzMatchRouter=true>一级分类</li>
+                        <li nz-menu-item routerLink='/epu/seccategory' nzMatchRouter=true>二级分类</li>
+                        <li nz-menu-item routerLink='/epu/material' nzMatchRouter=true>材料档案</li>
+                        <li nz-menu-item routerLink='/epu/settlementmode' nzMatchRouter=true>结算方式</li>
+                        <li nz-menu-item routerLink='/epu/paymentmode' nzMatchRouter=true>付款方式</li>
+                    </ul>
+                </li>
+                <li nz-submenu nzTitle="供应商档案" nzOpen=true>
+                    <ul>
+                        <li nz-menu-item routerLink='/epu/supplier' nzMatchRouter=true>供应商列表</li>
+                        <li nz-menu-item routerLink='/epu/resupplylist' nzMatchRouter=true>供应关系列表</li>
+                        <li nz-menu-item routerLink='/epu/resupplydetail' nzMatchRouter=true>供应关系分配</li>
+                    </ul>
+                </li>
+                <li nz-submenu nzTitle="项目管理" nzOpen=true>
+                    <ul>
+                        <li nz-menu-item routerLink='/epu/viepricelist' nzMatchRouter=true>竞价项目列表</li>
+                        <li nz-menu-item routerLink='/epu/viepriceadd' nzMatchRouter=true>竞价项目新增</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <div style="height: 100vh;width: 85%;background-color: #fff;padding: 10px;">
+        <router-outlet></router-outlet>
+    </div>
+</div>

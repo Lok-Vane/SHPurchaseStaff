@@ -12,9 +12,8 @@ import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { StaffModule } from './Staff/Staff.module';
 import { ParamInterceptor, NotificationInterceptor } from './core';
-// import { StaffModule } from '.';
+import { EPurchaseModule } from './epurchase/epurchase.module';
 
 
 registerLocaleData(zh);
@@ -24,7 +23,7 @@ registerLocaleData(zh);
     AppComponent
   ],
   imports: [
-    StaffModule,
+    EPurchaseModule,
     BrowserModule,
     AppRoutingModule,
     IconsProviderModule,

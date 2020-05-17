@@ -1,0 +1,265 @@
+/* You can add global styles to this file, and also import other style files */
+
+// -------- 引入官方提供的 less 样式入口文件 -----------
+@import "../node_modules/ng-zorro-antd/ng-zorro-antd.less";
+
+// -------- 引入ag-grid官方提供的 less 样式入口文件 ----
+@import "../node_modules/ag-grid-community/dist/styles/ag-grid.css";
+@import "../node_modules/ag-grid-community/dist/styles/ag-theme-balham.css";
+
+// -------- 自定义参数覆盖 -----------
+//@primary-color          : #f5222d;
+// Global
+@font-size-base: 12px;
+
+// Form
+// ---
+@form-item-margin-bottom    : 12px;
+@form-vertical-label-padding: 0 0 4px;
+
+.ant-form-item-control {
+    line-height: 24px;
+}
+
+.ant-form-item-label {
+    line-height: 24px;
+}
+
+.ant-form-explain,
+.ant-form-extra {
+    font-size: 10px;
+}
+
+// Card
+// ---
+@card-head-padding      : 8px;
+@card-inner-head-padding: 6px;
+@card-head-height       : 24px;
+
+// Modal
+// --
+@modal-body-padding: 12px;
+
+.ant-modal-header {
+    padding: 8px 24px;
+}
+
+.ant-modal-close-x {
+    height     : 40px;
+    line-height: 40px;
+}
+
+.ant-modal-footer {
+    padding: 8px 16px;
+}
+
+// DatePicker
+// --
+.ant-calendar-picker,
+// .ant-calendar-picker-small,
+.ant-form-inline .has-feedback,
+.ant-input-number {
+    width: 100%;
+}
+
+// PageHeader
+// --
+.ant-page-header {
+    border   : 1px solid #BDC3C7;
+    font-size: 12px;
+}
+
+.ant-page-header-heading {
+    height: 32px;
+}
+
+@page-header-padding           : 24px;
+@page-header-padding-vertical  : 0px;
+@page-header-padding-breadcrumb: 12px;
+
+// Pagination
+// --
+.ant-pagination {
+    margin: 2px 0px;
+}
+
+// Table
+// ---
+@table-padding-vertical: 9px;
+
+// buttongroup
+// --
+.ant-btn-group {
+    margin-left: 5px;
+    ;
+    margin-right: 10px;
+}
+
+// Layout(布局)
+// UI单列表
+.ls-list {
+    height               : 100%;
+    background           : white;
+    display              : grid;
+    grid-template-rows   : 32px 1fr 31px;
+    grid-template-columns: 1fr;
+    grid-template-areas  :
+        "btnarea"
+        "listarea"
+        "pagarea";
+
+    .ls-list-btnarea {
+        border   : 1px solid #BDC3C7;
+        grid-area: btnarea;
+    }
+
+    .li-list-listarea {
+        border   : 1px solid #BDC3C7;
+        grid-area: listarea;
+    }
+
+    .ls-list-pagarea {
+        border   : 1px solid #BDC3C7;
+        grid-area: pagarea;
+    }
+}
+
+.ls-ui-list {
+    height               : 100%;
+    background           : white;
+    display              : grid;
+    grid-template-rows   : 32px 1fr;
+    grid-template-columns: 1fr;
+    grid-template-areas  :
+        "toolbar"
+        "list";
+
+    .ls-ui-list-toolbar {
+        border   : 1px solid #BDC3C7;
+        grid-area: toolbar;
+    }
+
+    .ls-ui-list-grid {
+        border   : 1px solid #BDC3C7;
+        grid-area: list;
+    }
+}
+
+// UI单表单
+.ls-detail {
+    height               : 100%;
+    background           : white;
+    display              : grid;
+    grid-template-rows   : 32px 1fr;
+    grid-template-columns: 1fr;
+    grid-template-areas  :
+        "btnarea"
+        "formarea";
+
+    .ls-detail-btnarea {
+        // border   : 1px solid #BDC3C7;
+        grid-area   : btnarea;
+    }
+
+    .ls-detail-formarea {
+        margin-top   : 16px;
+        margin-right : 50px;
+        // border    : 1px solid #BDC3C7;
+        grid-area    : formarea;
+    }
+}
+
+// UI左列表右表单---主要用来将列表及详情表单一个页面展示
+.ls-mixui {
+    height               : 100%;
+    background           : white;
+    display              : grid;
+    grid-template-rows   : 32px 34px 1fr 31px;
+    grid-template-columns: 1fr 400px;
+    grid-template-areas  :
+        "btnarea    btnarea"
+        "listarea   titlearea"
+        "listarea   formarea"
+        "pagarea    formarea";
+
+    .ls-mixui-btnarea {
+        border   : 1px solid #BDC3C7;
+        grid-area: btnarea;
+    }
+
+    .ls-mixui-listarea {
+        grid-area: listarea;
+    }
+
+    .ls-mixui-titlearea {
+        grid-area: titlearea;
+    }
+
+    .ls-mixui-formarea {
+        // border    : 1px solid #BDC3C7;
+        //margin-top : 16px;
+        padding-top  : 16px;
+        grid-area    : formarea;
+        overflow-y   : auto;
+    }
+
+    .ls-mixui-pagarea {
+        border   : 1px solid #BDC3C7;
+        grid-area: pagarea;
+    }
+}
+
+.ls-ui-mix {
+    height               : 100%;
+    background           : white;
+    display              : grid;
+    grid-template-rows   : 32px 34px 1fr;
+    grid-template-columns: 1fr 400px;
+    grid-template-areas  :
+        "toolbar    toolbar"
+        "list       title"
+        "list       form";
+
+    .ls-ui-mix-toolbar {
+        border   : 1px solid #BDC3C7;
+        grid-area: toolbar;
+    }
+
+    .ls-ui-mix-list {
+        border   : 1px solid #BDC3C7;
+        grid-area: list;
+    }
+
+    .ls-ui-mix-title {
+        grid-area: title;
+    }
+
+    .ls-ui-mix-form {
+        // border    : 1px solid #BDC3C7;
+        //margin-top : 16px;
+        padding-top  : 16px;
+        grid-area    : form;
+        overflow-y   : auto;
+    }
+}
+
+// UI Grid样式
+.ls-grid {
+    height                  : 100%;
+    background              : white;
+    display                 : grid;
+    grid-template-rows      : 1fr 31px;
+    // grid-template-columns: 1fr;
+    grid-template-areas     :
+        "gridarea"
+        "pagingarea";
+
+    .ls-grid-gridarea {
+        grid-area: gridarea;
+    }
+
+    .ls-grid-pagingarea {
+        border   : 1px solid #BDC3C7;
+        grid-area: pagingarea;
+    }
+}

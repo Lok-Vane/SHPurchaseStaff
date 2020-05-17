@@ -1,0 +1,11 @@
+<div class="ls-ui-list">
+    <div class="ls-ui-list-toolbar">
+        <app-toolbar (sendClick)="subscribeClick($event)"></app-toolbar>
+    </div>
+    <div class="ls-ui-list-grid">
+        <app-routine-grid #epuViePriceGrid [columnDefs]="epuViePriceGridCols" rowSelectType="multiple"
+            (sendSelectChange)="onEpuViePriceGridSelectChange($event)"></app-routine-grid>
+    </div>
+</div>
+<app-epu-vieprice-query [isVisible]="isShowSearchDialog" (sendClick)="searchDialogCallback($event)">
+</app-epu-vieprice-query>

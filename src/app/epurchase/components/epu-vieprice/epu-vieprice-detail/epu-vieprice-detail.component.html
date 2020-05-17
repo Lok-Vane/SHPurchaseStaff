@@ -1,0 +1,291 @@
+<nz-spin [nzSpinning]="isSpinning" [nzDelay]="0">
+    <div class="formm">
+        <strong class="title">竞价项目详情</strong>
+        <div style="width: 98%;box-shadow: 5px 5px 5px #cccccc;">
+            <nz-descriptions nzTitle="" nzBordered [nzSize]="'middle'"
+                [nzColumn]="{ xxl: 3, xl: 3, lg: 3, md: 1, sm: 1, xs: 1 }">
+                <nz-descriptions-item nzTitle="采购组织">
+                    <div nz-tooltip nzTooltipTitle="{{data.orgSName}}" nzTooltipPlacement="top">
+                        {{data.orgName}}</div>
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="材料分类">
+                    <div nz-tooltip nzTooltipTitle="{{data.category}}" nzTooltipPlacement="top">
+                        {{data.category}}</div>
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="项目名称">
+                    <div nz-tooltip nzTooltipTitle="{{data.projectName}}" nzTooltipPlacement="top">
+                        {{data.projectName}}</div>
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="开始时间">
+                    <div nz-tooltip nzTooltipTitle="{{data.startTime}}" nzTooltipPlacement="top">
+                        {{data.startTime}}</div>
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="截止时间">
+                    <!-- [nzTooltipTitle]="false?'1':'2'"  -->
+                    <div nz-tooltip nzTooltipTitle="{{data.endTime}}" nzTooltipPlacement="top"
+                        *ngIf='getTimeStamp(data.endTime)>NOW'>
+                        {{data.endTime}}&nbsp;<span style="color: red;">(未含延时)</span></div>
+                    <div nz-tooltip nzTooltipTitle="{{data.finalTime}}" nzTooltipPlacement="top"
+                        *ngIf='getTimeStamp(data.endTime)<=NOW'>
+                        {{data.finalTime}}&nbsp;<span style="color: red;">(已含延时)</span></div>
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="交货完成时间">
+                    <div nz-tooltip nzTooltipTitle="{{data.seedGoodsTime}}" nzTooltipPlacement="top">
+                        {{data.seedGoodsTime}}</div>
+                </nz-descriptions-item>
+
+                <nz-descriptions-item nzTitle="创建人">
+                    <div nz-tooltip nzTooltipTitle="{{data.createdByName}}" nzTooltipPlacement="top">
+                        {{data.createdByName}}</div>
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="创建时间">
+                    <div nz-tooltip nzTooltipTitle="{{data.createdTime}}" nzTooltipPlacement="top">
+                        {{data.createdTime}}</div>
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="修改人">
+                    <div nz-tooltip nzTooltipTitle="{{data.modifyByName}}" nzTooltipPlacement="top">
+                        {{data.modifyByName}}</div>
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="修改时间">
+                    <div nz-tooltip nzTooltipTitle="{{data.modifyTime}}" nzTooltipPlacement="top">
+                        {{data.modifyTime}}</div>
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="当前竞价人数">
+                    <div nz-tooltip nzTooltipTitle="{{NumOfBidders}}" nzTooltipPlacement="top">
+                        {{NumOfBidders}}</div>
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="项目总金额">
+                    <div nz-tooltip nzTooltipTitle="{{getTotalAmountTips()}}" nzTooltipPlacement="top">
+                        <span *ngIf='data.totalAmount === null' style="color: red;">项目未截止，暂无数据</span>
+                        <span *ngIf="data.totalAmount === '0.00'" style="color: red;">项目已截止，无合格报价</span>
+                        <span
+                            *ngIf="data.totalAmount !== '0.00' && data.totalAmount !== null">{{data.totalAmount}}&nbsp;元</span>
+                    </div>
+                </nz-descriptions-item>
+
+            </nz-descriptions>
+        </div>
+
+        <div id="Form2">
+            <nz-table nzSize="middle" [nzData]="data.contentDtos" [nzFrontPagination]='false'
+                [nzScroll]="{ x: '1200px' }">
+
+                <thead>
+                    <tr>
+                        <th nzWidth="100px" nzLeft="0px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;">
+                                <span>材料名称</span>
+                            </div>
+                        </th>
+                        <th nzWidth="100px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;">
+                                <span>规格/型号</span>
+                            </div>
+                        </th>
+                        <th nzWidth="100px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;">
+                                <span>计量单位</span>
+                            </div>
+                        </th>
+                        <th nzWidth="100px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;">
+                                <span>采购数量</span>
+                            </div>
+                        </th>
+                        <th nzWidth="100px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;">
+                                <span>减价阶梯</span>
+                            </div>
+                        </th>
+                        <th nzWidth="100px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;">
+                                <span>结算方式</span>
+                            </div>
+                        </th>
+                        <th nzWidth="100px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;">
+                                <span>付款方式</span>
+                            </div>
+                        </th>
+                        <th nzWidth="100px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;">
+                                <span>料品税率</span>
+                            </div>
+                        </th>
+                        <th nzWidth="100px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;">
+                                <span>运费税率</span>
+                            </div>
+                        </th>
+                        <th nzWidth="100px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;">
+                                <span>最高限价</span>
+                            </div>
+                        </th>
+                        <!-- <th nzWidth="100px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;">
+                                <span>送货允许误差</span>
+                            </div>
+                        </th> -->
+                        <th nzWidth="150px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 150px;">
+                                <span>品牌或产地</span>
+                            </div>
+                        </th>
+                        <th nzWidth="150px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 150px;">
+                                <span>备注</span>
+                            </div>
+                        </th>
+                        <th nzWidth="100px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;">
+                                <span>第一名分配量</span>
+                            </div>
+                        </th>
+                        <th nzWidth="100px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;">
+                                <span>第二名分配量</span>
+                            </div>
+                        </th>
+                        <th nzWidth="100px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;">
+                                <span>第三名分配量</span>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of data.contentDtos;let i = index">
+                        <td nzLeft="0px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
+                                nz-tooltip nzTooltipTitle="{{item.productName}}">
+                                {{item.productName}}</div>
+                        </td>
+                        <td>
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
+                                nz-tooltip nzTooltipTitle="{{item.specifications}}">
+                                {{item.specifications}}</div>
+                        </td>
+                        <td>
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
+                                nz-tooltip nzTooltipTitle="{{item.metering}}">
+                                {{item.metering}}</div>
+                        </td>
+                        <td>
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
+                                nz-tooltip
+                                nzTooltipTitle="{{item.purchaseNum.toFixed(2).toString()}}&nbsp;{{item.metering}}">
+                                {{item.purchaseNum.toFixed(2).toString()}}&nbsp;{{item.metering}}</div>
+                        </td>
+                        <td>
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
+                                nz-tooltip nzTooltipTitle="{{item.dropPrice.toFixed(2).toString()}}&nbsp;元">
+                                {{item.dropPrice.toFixed(2).toString()}}&nbsp;元</div>
+                        </td>
+
+                        <td>
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
+                                *ngIf='item.reserve3!==null' nz-tooltip nzTooltipTitle="{{item.reserve3}}">
+                                {{item.reserve3}}</div>
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
+                                *ngIf='item.reserve3==null' nz-tooltip nzTooltipTitle="供应商自定">
+                                供应商自定</div>
+                        </td>
+                        <td>
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
+                                nz-tooltip nzTooltipTitle="{{item.reserve5}}">
+                                {{item.reserve5}}</div>
+                        </td>
+                        <td>
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
+                                *ngIf='item.reserve2!==null' nz-tooltip
+                                nzTooltipTitle="{{(item.reserve2*100).toFixed(2).toString()}}&nbsp;%">
+                                {{(item.reserve2*100).toFixed(2).toString()}}&nbsp;%</div>
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
+                                *ngIf='item.reserve2==null' nz-tooltip nzTooltipTitle="供应商自定">
+                                供应商自定</div>
+                        </td>
+                        <td>
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
+                                *ngIf='item.reserve4!==null' nz-tooltip
+                                nzTooltipTitle="{{(item.reserve4*100).toFixed(2).toString()}}&nbsp;%">
+                                {{(item.reserve4*100).toFixed(2).toString()}}&nbsp;%</div>
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
+                                *ngIf='item.reserve4==null' nz-tooltip nzTooltipTitle="供应商自定">
+                                供应商自定</div>
+                        </td>
+                        <td>
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
+                                nz-tooltip
+                                nzTooltipTitle="{{item.highestLimit.toFixed(2).toString()}}&nbsp;元/{{item.metering}}">
+                                {{item.highestLimit.toFixed(2).toString()}}&nbsp;元/{{item.metering}}</div>
+                        </td>
+                        <!-- <td>
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
+                                nz-tooltip
+                                nzTooltipTitle="±&nbsp;{{item.errorLimit.toFixed(2).toString()}}&nbsp;{{item.metering}}">
+                                ±&nbsp;{{item.errorLimit.toFixed(2).toString()}}&nbsp;{{item.metering}}</div>
+                        </td> -->
+                        <td>
+                            <div style="display: flex;justify-content: center;align-items: center;width: 150px;"
+                                nz-tooltip nzTooltipTitle="{{item.reserve1}}">
+                                {{item.reserve1}}</div>
+                        </td>
+                        <td>
+                            <div style="display: flex;justify-content: center;align-items: center;width: 150px;"
+                                nz-tooltip nzTooltipTitle="{{item.remark}}">
+                                {{item.remark}}</div>
+                        </td>
+                        <td>
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
+                                nz-tooltip
+                                nzTooltipTitle="{{item.distribute1.toFixed(2).toString()}}&nbsp;{{item.metering}}">
+                                {{item.distribute1.toFixed(2).toString()}}&nbsp;{{item.metering}}</div>
+                        </td>
+                        <td>
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
+                                nz-tooltip
+                                nzTooltipTitle="{{item.distribute2.toFixed(2).toString()}}&nbsp;{{item.metering}}">
+                                {{item.distribute2.toFixed(2).toString()}}&nbsp;{{item.metering}}</div>
+                        </td>
+                        <td>
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
+                                nz-tooltip
+                                nzTooltipTitle="{{item.distribute3.toFixed(2).toString()}}&nbsp;{{item.metering}}">
+                                {{item.distribute3.toFixed(2).toString()}}&nbsp;{{item.metering}}</div>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </nz-table>
+
+        </div>
+
+        <!-- 倒计时 -->
+        <app-countdown *ngIf='getTimeStamp(data.endTime)>NOW' #countdownChild [date]=data.endTime [finishWorld]="'已截止'">
+        </app-countdown>
+        <app-countdown *ngIf='getTimeStamp(data.endTime)<=NOW' #countdownChild [date]=data.finalTime
+            [finishWorld]="'已截止'"></app-countdown>
+
+        <div style="display: flex;">
+
+            <button nz-button style="margin: 10px 10px" (click)="SHOW()" [nzSize]="'small'" id="showbtn"
+                *ngIf='showbtn'>{{buttonMsg}}</button>
+
+            <button nzType='primary' nz-button style="margin: 10px 10px" (click)=toResult() [nzSize]="'small'"
+                *ngIf="getTimeStamp(data.finalTime)<NOW">查看竞价结果</button>
+
+            <button *ngIf="getTimeStamp(data.startTime)>NOW" style="margin: 10px 10px" nzType='danger' nz-button
+                nz-popconfirm [nzSize]="'small'" nzPopconfirmTitle="确认删除该项目吗？" [nzIcon]="iconTpl"
+                (nzOnConfirm)="delete()" (nzOnCancel)="cancel()">删除</button>
+
+            <button *ngIf="getTimeStamp(data.startTime)>NOW" style="margin: 10px 10px" nzType='primary' nz-button
+                [nzSize]="'small'" (click)='toModify()'>修改</button>
+
+            <ng-template #iconTpl>
+                <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+            </ng-template>
+        </div>
+
+    </div>
+</nz-spin>

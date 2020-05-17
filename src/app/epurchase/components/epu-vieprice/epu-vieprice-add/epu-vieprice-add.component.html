@@ -1,0 +1,350 @@
+<!-- 二次确认弹窗 -->
+<ng-template #iconTpl>
+    <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+</ng-template>
+
+<div style="margin: 20px 0px 40px 0px;width: 70%;position: relative;left: 15%;">
+    <nz-steps nzType="navigation" nzSize="small" [nzCurrent]="step">
+        <nz-step nzTitle="填写" nzDescription="采购物料清单.">
+        </nz-step>
+        <nz-step nzTitle="提交" nzDescription="项目发布成功.">
+        </nz-step>
+    </nz-steps>
+</div>
+
+
+
+<nz-spin [nzSpinning]="isSpinning" [nzDelay]="0">
+
+    <div *ngIf="step==0" class="panel-body"
+        style="width: 98%;margin: 0 2px;background-color: #fff;position: relative;left: 1%;">
+
+        <nz-descriptions nzBordered [nzSize]="'small'" [nzColumn]="{ xxl: 3, xl: 3, lg: 3, md: 1, sm: 1, xs: 1 }">
+            <nz-descriptions-item nzTitle="采购组织">
+                <span style="display:flex; align-items:center">
+                    <strong style="color: red;">*&nbsp;</strong>
+                    <nz-select nzPlaceHolder="采购组织" [(ngModel)]="shared.Form1.orgCode"
+                        (ngModelChange)='createProjectName()' nzAllowClear=true>
+                        <ng-container *ngFor="let item of orgList;let j = index">
+                            <nz-option nzValue="{{item.code}}" nzLabel="【{{item.shortName}}】{{item.name}}">
+                            </nz-option>
+                        </ng-container>
+                    </nz-select>
+                </span>
+            </nz-descriptions-item>
+
+            <nz-descriptions-item nzTitle="材料分类">
+                <span style="display:flex; align-items:center;">
+                    <strong style="color: red;">*&nbsp;</strong>
+                    <nz-select nzPlaceHolder="一级分类" [(ngModel)]="shared.Form1.category" style="min-width: 150px;"
+                        (ngModelChange)='bindCategorySelect()' nzAllowClear=true>
+                        <ng-container *ngFor="let item of categoryFirstList;let j = index">
+                            <nz-option nzValue="{{item.code}}" nzLabel="{{item.categoryFirName}}"></nz-option>
+                        </ng-container>
+                    </nz-select>
+                </span>
+            </nz-descriptions-item>
+
+            <nz-descriptions-item nzTitle="项目名称">
+                <span style="display:flex; align-items:center">
+                    <strong style="color: red;">*&nbsp;</strong>
+                    <textarea nz-input placeholder="例：广东三和钢棒竞价项目20201231" [(ngModel)]="shared.Form1.projectName"
+                        style="min-width: 150px;" oninput="value=value.replace(/\s+/g,'')" rows="1"></textarea>
+                </span>
+            </nz-descriptions-item>
+
+            <nz-descriptions-item nzTitle="竞价开始时间">
+                <span style="display:flex; align-items:center">
+                    <strong style="color: red;">*&nbsp;</strong>
+                    <nz-date-picker nzShowToday=false nzFormat="yyyy-MM-dd HH:mm:ss" [nzAllowClear] nzShowTime
+                        style="min-width: 150px;" [(ngModel)]="shared.Form1.startTime"
+                        (ngModelChange)='enableEndTime()'>
+                    </nz-date-picker>
+                </span>
+            </nz-descriptions-item>
+
+            <nz-descriptions-item nzTitle="竞价截止时间">
+                <span style="display:flex; align-items:center">
+                    <strong style="color: red;">*&nbsp;</strong>
+                    <nz-select nzPlaceHolder="竞价截止时间" [(ngModel)]="shared.Time" (ngModelChange)='bindEndTime()'
+                        style="min-width: 150px;" [nzDisabled]=shared.ifEndTime nzAllowClear=true>
+                        <ng-container *ngFor="let item of endTimeList;let j = index">
+                            <nz-option nzValue="{{item.Value}}" nzLabel="{{item.Label}}"></nz-option>
+                        </ng-container>
+                    </nz-select>
+                </span>
+            </nz-descriptions-item>
+
+            <nz-descriptions-item nzTitle="交货完成时间">
+                <span style="display:flex; align-items:center">
+                    <strong style="color: red;">*&nbsp;</strong>
+                    <nz-date-picker [nzAllowClear] style="min-width: 150px;" [(ngModel)]="shared.Form1.seedGoodsTime">
+                    </nz-date-picker>
+                </span>
+            </nz-descriptions-item>
+        </nz-descriptions>
+
+        <div id="Form2">
+            <nz-table nzSize="small" [nzData]="shared.Form2" [nzFrontPagination]='false' [nzScroll]="{ x: '1300px' }">
+
+                <thead>
+                    <tr>
+                        <th nzWidth="50px" nzLeft="0px">
+                            <label nz-checkbox [(ngModel)]="checkedAll" (ngModelChange)='onCheckedChange1()'
+                                [nzIndeterminate]="indeterminate"></label>
+                        </th>
+                        <th nzWidth="150px" nzLeft="32px">
+                            <!-- <th nzWidth="150px" nzLeft="0px"> -->
+                            <div style="display: flex;justify-content: center;align-items: center;width: 150px;">
+                                <strong style="color: red;">*&nbsp;</strong>
+                                <span>二级分类</span>
+                            </div>
+                        </th>
+                        <th nzWidth="150px" nzLeft="198px">
+                            <!-- <th nzWidth="150px" nzLeft="166px"> -->
+                            <div style="display: flex;justify-content: center;align-items: center;width: 150px;">
+                                <strong style="color: red;">*&nbsp;</strong>
+                                <span>产品名称</span>
+                            </div>
+                        </th>
+                        <th nzWidth="100px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;">
+                                <strong style="color: red;">*&nbsp;</strong>
+                                <span>计量单位</span>
+                            </div>
+                        </th>
+                        <th nzWidth="100px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;">
+                                <strong style="color: red;">*&nbsp;</strong>
+                                <span>采购数量</span>
+                            </div>
+                        </th>
+                        <th nzWidth="100px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;">
+                                <strong style="color: red;">*&nbsp;</strong>
+                                <span>减价阶梯</span>
+                            </div>
+                        </th>
+                        <th nzWidth="100px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
+                                nz-tooltip nzTooltipTitle="结算方式为空，即默认供应商自定" nzTooltipPlacement="top">
+                                <!-- <strong style="color: red;">&nbsp;</strong> -->
+                                <span>结算方式</span>
+                            </div>
+                        </th>
+                        <th nzWidth="100px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;">
+                                <strong style="color: red;">*&nbsp;</strong>
+                                <span>付款方式</span>
+                            </div>
+                        </th>
+                        <th nzWidth="100px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
+                                nz-tooltip nzTooltipTitle="税率为0%，即默认供应商自定" nzTooltipPlacement="top">
+                                <!-- <strong style="color: red;">&nbsp;</strong> -->
+                                <span>料品税率</span>
+                            </div>
+                        </th>
+                        <th nzWidth="100px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
+                                nz-tooltip nzTooltipTitle="税率为0%，即默认供应商自定" nzTooltipPlacement="top">
+                                <!-- <strong style="color: red;">&nbsp;</strong> -->
+                                <span>运费税率</span>
+                            </div>
+                        </th>
+                        <th nzWidth="100px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;">
+                                <strong style="color: red;">*&nbsp;</strong>
+                                <span>最高限价</span>
+                            </div>
+                        </th>
+                        <th nzWidth="130px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 130px;">
+                                <strong style="color: red;">*&nbsp;</strong>
+                                <span>第一名分配量</span>
+                            </div>
+                        </th>
+                        <th nzWidth="130px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 130px;">
+                                <strong style="color: red;">*&nbsp;</strong>
+                                <span>第二名分配量</span>
+                            </div>
+                        </th>
+                        <th nzWidth="130px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 130px;">
+                                <strong style="color: red;">*&nbsp;</strong>
+                                <span>第三名分配量</span>
+                            </div>
+                        </th>
+                        <!-- <th nzWidth="130px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 130px;">
+                                <strong style="color: red;">*&nbsp;</strong>
+                                <span>送货允许误差</span>
+                            </div>
+                        </th> -->
+                        <th nzWidth="200px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 200px;">
+                                <!-- <strong style="color: red;">&nbsp;</strong> -->
+                                <span>品牌或产地</span>
+                            </div>
+                        </th>
+                        <th nzWidth="200px">
+                            <div style="display: flex;justify-content: center;align-items: center;width: 200px;">
+                                <!-- <strong style="color: red;">&nbsp;</strong> -->
+                                <span>备注</span>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of shared.Form2 ;let i = index">
+                        <td nzLeft="0px">
+                            <label nz-checkbox [(ngModel)]="shared.Form2[i].checked"
+                                (ngModelChange)='onCheckedChange2()'></label>
+                        </td>
+                        <td nzLeft="32px">
+                            <!-- <td nzLeft="0px"> -->
+                            <nz-select style="width: 150px;" [(ngModel)]="shared.Form2[i].secCode" nzAllowClear=true
+                                (ngModelChange)='FindProductList(i)'>
+                                <ng-container *ngFor="let item of shared.categorySecondList;let j = index">
+                                    <nz-option nzValue="{{item.code}}" nzLabel="{{item.categoryName}}">
+                                    </nz-option>
+                                </ng-container>
+                            </nz-select>
+                        </td>
+                        <td nzLeft="198px">
+                            <!-- <td nzLeft="166px"> -->
+                            <nz-select style="width: 150px;" [(ngModel)]="shared.Form2[i].productCode" nzAllowClear=true
+                                (ngModelChange)='FindProduct(i)'>
+                                <ng-container *ngFor="let item of shared.Form2[i].productList;let j = index">
+                                    <nz-option nzValue="{{item.code}}"
+                                        nzLabel="{{item.productName}}&nbsp;{{item.specifications}}">
+                                    </nz-option>
+                                </ng-container>
+                            </nz-select>
+                        </td>
+                        <td>
+                            <input nz-input disabled='true' style="width: 100px;" type="text"
+                                [(ngModel)]="shared.Form2[i].metering">
+                        </td>
+                        <td>
+                            <nz-input-number style="width: 100px;" [(ngModel)]="shared.Form2[i].purchaseNum" [nzMin]="0"
+                                [nzStep]="1" [nzFormatter]="formatterMetering" [nzParser]="parserMetering"
+                                (ngModelChange)='meteringChange(i)'>
+                            </nz-input-number>
+                        </td>
+                        <td>
+                            <nz-input-number style="width: 100px;" [(ngModel)]="shared.Form2[i].dropPrice" [nzMin]="0"
+                                [nzStep]="1" [nzFormatter]="formatterRMB" [nzParser]="parserRMB">
+                            </nz-input-number>
+                        </td>
+                        <td>
+                            <nz-select style="width: 100px;" [(ngModel)]="shared.Form2[i].reserve3" nzAllowClear=true
+                                nz-tooltip nzTooltipTitle="结算方式为空，即默认供应商自定" nzTooltipPlacement="top">
+                                <ng-container *ngFor="let item of settlementList;let j = index">
+                                    <nz-option nzValue="{{item.value}}" nzLabel="{{item.value}}">
+                                    </nz-option>
+                                </ng-container>
+                            </nz-select>
+                        </td>
+                        <td>
+                            <nz-select style="width: 100px;" [(ngModel)]="shared.Form2[i].reserve5" nzAllowClear=true>
+                                <ng-container *ngFor="let item of paymentList;let j = index">
+                                    <nz-option nzValue="{{item.value}}" nzLabel="{{item.value}}">
+                                    </nz-option>
+                                </ng-container>
+                            </nz-select>
+                        </td>
+                        <td>
+                            <nz-input-number style="width: 100px;" [(ngModel)]="shared.Form2[i].reserve2" nz-tooltip
+                                nzTooltipTitle="税率为0%，即默认供应商自定" nzTooltipPlacement="top" nzAllowClear=true [nzMin]="0"
+                                [nzMax]="100" [nzStep]="0.01" [nzFormatter]="formatterPercent"
+                                [nzParser]="parserPercent" (ngModelChange)=formatterPercentage(i)>
+                            </nz-input-number>
+                        </td>
+                        <td>
+                            <nz-input-number style="width: 100px;" [(ngModel)]="shared.Form2[i].reserve4" nz-tooltip
+                                nzTooltipTitle="税率为0%，即默认供应商自定" nzTooltipPlacement="top" nzAllowClear=true [nzMin]="0"
+                                [nzMax]="100" [nzStep]="0.01" [nzFormatter]="formatterPercent"
+                                [nzParser]="parserPercent" (ngModelChange)=formatterPercentage2(i)>
+                            </nz-input-number>
+                        </td>
+                        <td>
+                            <nz-input-number style="width: 100px;" [(ngModel)]="shared.Form2[i].highestLimit"
+                                [nzMin]="0" [nzStep]="1" [nzFormatter]="formatterRMB" [nzParser]="parserRMB">
+                            </nz-input-number>
+                        </td>
+                        <td>
+                            <nz-input-number style="width: 130px;" [(ngModel)]="shared.Form2[i].distribute1" [nzMin]="0"
+                                [nzStep]="1" [nzFormatter]="formatterMetering" [nzParser]="parserMetering"
+                                (ngModelChange)='meteringChange(i)'></nz-input-number>
+                        </td>
+                        <td>
+                            <nz-input-number style="width: 130px;" [(ngModel)]="shared.Form2[i].distribute2" [nzMin]="0"
+                                [nzStep]="1" [nzFormatter]="formatterMetering" [nzParser]="parserMetering"
+                                (ngModelChange)='meteringChange(i)'></nz-input-number>
+                        </td>
+                        <td>
+                            <nz-input-number style="width: 130px;" [(ngModel)]="shared.Form2[i].distribute3" [nzMin]="0"
+                                [nzStep]="1" [nzFormatter]="formatterMetering" [nzParser]="parserMetering"
+                                (ngModelChange)='meteringChange(i)'></nz-input-number>
+                        </td>
+                        <!-- <td>
+                            <nz-input-number style="width: 130px;" [(ngModel)]="shared.Form2[i].errorLimit" [nzMin]="0"
+                                [nzStep]="1" [nzFormatter]="formatterMetering" [nzParser]="parserMetering"
+                                (ngModelChange)='meteringChange(i)'></nz-input-number>
+                        </td> -->
+                        <td>
+                            <textarea nz-input style="width: 200px;" type="text" [(ngModel)]="shared.Form2[i].reserve1"
+                                rows="1" oninput="value=value.replace(/\s+/g,'')"></textarea>
+                        </td>
+                        <td>
+                            <textarea nz-input style="width: 200px;" type="text" [(ngModel)]="shared.Form2[i].remark"
+                                rows="1" oninput="value=value.replace(/\s+/g,'')"></textarea>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </nz-table>
+
+            <div style="display: flex;justify-content: center;">
+                <div style="display: flex;">
+                    <button nz-popconfirm nzPopconfirmTitle="确定要删除选中数据吗？" [nzIcon]="iconTpl" (nzOnConfirm)="sub()"
+                        [nzSize]="'small'" (nzOnCancel)="cancel()" nzType="danger" nzGhost nz-tooltip
+                        nzTooltipTitle="删行" style="margin: 10px 0px 10px 15px" id="btn_p" nz-button nzShape="circle"><i
+                            nz-icon nzType="minus" nzTheme="outline"></i></button>
+
+                    <button nzType='primary' nzGhost nzGhost nz-tooltip nzTooltipTitle="增行" [nzSize]="'small'"
+                        style="margin: 10px 40px 10px 15px" (click)="add()" id="btn_p" nz-button nzShape="circle"><i
+                            nz-icon nzType="plus" nzTheme="outline"></i></button>
+                </div>
+            </div>
+
+        </div>
+
+        <div style="display: flex;justify-content: center;margin-bottom: 20px;">
+            <div style="display: flex;">
+                <button style="margin: 10px 0px" nzType='danger' nz-button nz-popconfirm [nzSize]="'small'"
+                    nzPopconfirmTitle="确定要清空表单吗？" [nzIcon]="iconTpl" (nzOnConfirm)="emptyFormData()"
+                    (nzOnCancel)="cancel()">清空</button>
+
+                <button style="margin: 10px 15px" nzType='primary' nz-button nz-popconfirm [nzSize]="'small'"
+                    nzPopconfirmTitle="请确认信息填写无误！" [nzIcon]="iconTpl" (nzOnConfirm)="POST()"
+                    (nzOnCancel)="cancel()">提交</button>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div *ngIf="step==1">
+        <nz-result [nzIcon]="'smile-twotone'" nzTitle="竞价项目发布成功！"
+            nzSubTitle="{{successData.createdByName}}&nbsp;&nbsp;于&nbsp;&nbsp;{{successData.createdTime}}&nbsp;&nbsp;创建&nbsp;&nbsp;“{{successData.projectName}}”&nbsp;&nbsp;项目成功.">
+        </nz-result>
+        <div
+            style="display: flex;width: 100%;justify-content: center;justify-items: center;align-content: center;margin: 20px 0px;">
+            <button nz-button nzType="primary" (click)="finish()" [nzSize]="'small'">完成</button>
+        </div>
+    </div>
+
+</nz-spin>

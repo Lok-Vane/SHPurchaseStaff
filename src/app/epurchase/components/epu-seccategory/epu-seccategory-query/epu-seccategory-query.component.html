@@ -1,0 +1,30 @@
+<nz-modal nzMaskClosable="false" [nzVisible]="isVisible" nzTitle="查询" (nzOnCancel)="handleCancel()"
+    (nzOnOk)="handleOk()">
+    <form nz-form class="ls-list-form-formarea" nzGutter="8" [formGroup]="theFormGroup">
+        <nz-form-item>
+            <nz-form-label nzFor="code" nzSpan="4">编码</nz-form-label>
+            <nz-form-control nzSpan="19">
+                <input [nzSize]="controlSize" nz-input id="code" formControlName="code"
+                    oninput="value=value.replace(/\s+/g,'')">
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="categoryName" nzSpan="4">名称</nz-form-label>
+            <nz-form-control nzSpan="19">
+                <input [nzSize]="controlSize" nz-input id="categoryName" formControlName="categoryName"
+                    oninput="value=value.replace(/\s+/g,'')">
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="state" nzSpan="4">档案状态</nz-form-label>
+            <nz-form-control nzSpan="19">
+                <!-- <input [nzSize]="controlSize" nz-input placeholder="0：已删除或已禁用；1：启用中" id="state" formControlName="state"
+                    oninput="value=value.replace(/\s+/g,'')"> -->
+                <nz-select [nzSize]="controlSize" style="width: 100%;" id="state" formControlName="state">
+                    <nz-option *ngFor="let o of stateList" [nzValue]="o.value" [nzLabel]="o.label">
+                    </nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</nz-modal>

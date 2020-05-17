@@ -1,0 +1,19 @@
+<nz-modal nzMaskClosable="false" [nzVisible]="isVisible" nzTitle="查询" (nzOnCancel)="handleCancel()"
+    (nzOnOk)="handleOk()">
+    <form nz-form class="ls-list-form-formarea" nzGutter="8" [formGroup]="theFormGroup">
+        <nz-form-item>
+            <nz-form-label nzFor="code" nzSpan="4">编码</nz-form-label>
+            <nz-form-control nzSpan="19">
+                <input [nzSize]="controlSize" nz-input id="code" formControlName="code"
+                    oninput="value=value.replace(/\s+/g,'')">
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="value" nzSpan="4">名称</nz-form-label>
+            <nz-form-control nzSpan="19">
+                <input [nzSize]="controlSize" nz-input id="value" formControlName="value"
+                    oninput="value=value.replace(/\s+/g,'')">
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</nz-modal>

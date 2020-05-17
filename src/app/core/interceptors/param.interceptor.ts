@@ -33,7 +33,7 @@ export class ParamInterceptor implements HttpInterceptor {
     //     // let url = req.url;
     //     // 获取token
     //     const logininfo: any = sessionStorage.getItem('token');
-    //     if (logininfo != null && logininfo.length > 0) {
+    //     if (logininfo !== null && logininfo.length > 0) {
     //         // 克隆请求头并附加Token
     //         const tokeninfo = JSON.parse(logininfo);
     //         const modifiedReq = req.clone({
@@ -61,7 +61,7 @@ export class ParamInterceptor implements HttpInterceptor {
             // 克隆请求头并附加Token
             // const tokeninfo = JSON.parse(logininfo);
             const modifiedReq = req.clone({
-                setHeaders: { Authorization: `${logininfo}` }
+                setHeaders: { Authorization: `Bearer ${logininfo}` }
             });
             return next.handle(modifiedReq);
         } else {

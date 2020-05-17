@@ -1,0 +1,11 @@
+<div class="ls-ui-list">
+    <div class="ls-ui-list-toolbar">
+        <app-toolbar (sendClick)="subscribeClick($event)"></app-toolbar>
+    </div>
+    <div class="ls-ui-list-grid">
+        <app-routine-grid #epuReSupplyGrid [columnDefs]="epuReSupplyGridCols" rowSelectType="multiple"
+            (sendSelectChange)="onEpuReSupplyGridSelectChange($event)"></app-routine-grid>
+    </div>
+</div>
+<app-epu-resupply-query [isVisible]="isShowSearchDialog" (sendClick)="searchDialogCallback($event)">
+</app-epu-resupply-query>

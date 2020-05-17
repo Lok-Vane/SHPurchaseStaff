@@ -1,0 +1,114 @@
+<div class="ls-ui-mix">
+    <div class="ls-ui-mix-toolbar">
+        <app-toolbar (sendClick)="subscribeClick($event)"></app-toolbar>
+    </div>
+    <div class="ls-ui-mix-list">
+        <app-routine-grid #epuSupplierGrid [columnDefs]="epuSupplierGridCols" rowSelectType="multiple"
+            (sendSelectChange)="onEpuSupplierGridSelectChange($event)">
+        </app-routine-grid>
+    </div>
+    <nz-page-header class="ls-ui-mix-title" nzSubtitle="详情"> </nz-page-header>
+    <form nz-form class="ls-ui-mix-form" nzGutter="8" [formGroup]="epuSupplierForm"
+        style="height: 100%; overflow: auto;">
+        <nz-form-item hidden="true">
+            <nz-form-label nzFor="bizId" nzSpan="8" nzRequired>数据标识</nz-form-label>
+            <nz-form-control nzSpan="15">
+                <input nz-input [nzSize]="controlSize" id="bizId" formControlName="bizId" readonly>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item hidden="true">
+            <nz-form-label nzFor="sysVersion" nzSpan="8" nzRequired>数据版本</nz-form-label>
+            <nz-form-control nzSpan="15">
+                <input nz-input [nzSize]="controlSize" id="sysVersion" formControlName="sysVersion" readonly>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="code" nzSpan="8" nzRequired>编码</nz-form-label>
+            <nz-form-control nzSpan="15">
+                <input nz-input [nzSize]="controlSize" id="code" formControlName="code" disabled>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="supplierName" nzSpan="8" nzRequired>名称</nz-form-label>
+            <nz-form-control nzSpan="15">
+                <input nz-input [nzSize]="controlSize" id="supplierName" formControlName="supplierName"
+                    [disabled]="!isEditMode" [readonly]="!isEditMode" oninput="value=value.replace(/\s+/g,'')">
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="email" nzSpan="8" nzRequired>邮箱</nz-form-label>
+            <nz-form-control nzSpan="15">
+                <input nz-input [nzSize]="controlSize" id="email" formControlName="email" [disabled]="!isEditMode"
+                    [readonly]="!isEditMode" oninput="value=value.replace(/\s+/g,'')" type="email">
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="phone" nzSpan="8" nzRequired>手机号码</nz-form-label>
+            <nz-form-control nzSpan="15">
+                <input nz-input [nzSize]="controlSize" id="phone" formControlName="phone" [disabled]="!isEditMode"
+                    [readonly]="!isEditMode" maxlength="11" oninput="value=value.replace(/\D/g,'')">
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="password_Sup" nzSpan="8" nzRequired>初始密码</nz-form-label>
+            <nz-form-control nzSpan="15">
+                <input type="password" nz-input [nzSize]="controlSize" id="password_Sup" formControlName="password_Sup"
+                    [disabled]="!isCreateMode" [readonly]="!isCreateMode">
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="address_Sup" nzSpan="8">地址</nz-form-label>
+            <nz-form-control nzSpan="15">
+                <input nz-input [nzSize]="controlSize" id="address_Sup" formControlName="address_Sup"
+                    [disabled]="!isEditMode" [readonly]="!isEditMode" oninput="value=value.replace(/\s+/g,'')">
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="orgLicenseNo" nzSpan="8">组织机构代码</nz-form-label>
+            <nz-form-control nzSpan="15">
+                <input nz-input [nzSize]="controlSize" id="orgLicenseNo" formControlName="orgLicenseNo"
+                    [disabled]="!isEditMode" [readonly]="!isEditMode" oninput="value=value.replace(/\s+/g,'')">
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="businessLicense" nzSpan="8">营业执照</nz-form-label>
+            <nz-form-control nzSpan="15">
+                <input nz-input [nzSize]="controlSize" id="businessLicense" formControlName="businessLicense"
+                    [disabled]="!isEditMode" [readonly]="!isEditMode" oninput="value=value.replace(/\s+/g,'')">
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="remark" nzSpan="8">备注</nz-form-label>
+            <nz-form-control nzSpan="15">
+                <input nz-input [nzSize]="controlSize" id="remark" formControlName="remark" [disabled]="!isEditMode"
+                    [readonly]="!isEditMode" oninput="value=value.replace(/\s+/g,'')">
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="createdByName" nzSpan="8" nzRequired>创建人</nz-form-label>
+            <nz-form-control nzSpan="15">
+                <input nz-input [nzSize]="controlSize" id="createdByName" formControlName="createdByName" disabled>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="createdTime" nzSpan="8" nzRequired>创建时间</nz-form-label>
+            <nz-form-control nzSpan="15">
+                <input nz-input [nzSize]="controlSize" id="createdTime" formControlName="createdTime" disabled>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="modifyByName" nzSpan="8">修改人</nz-form-label>
+            <nz-form-control nzSpan="15">
+                <input nz-input [nzSize]="controlSize" id="modifyByName" formControlName="modifyByName" disabled>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="modifyTime" nzSpan="8">修改时间</nz-form-label>
+            <nz-form-control nzSpan="15">
+                <input nz-input [nzSize]="controlSize" id="modifyTime" formControlName="modifyTime" disabled>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</div>
+<app-epu-supplier-query [isVisible]="isShowSearchDialog" (sendClick)="searchDialogCallback($event)">
+</app-epu-supplier-query>

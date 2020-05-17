@@ -30,7 +30,7 @@ export class SharedService {
     endTime: null,        // 截止时间
     // publishTime: null,
     startTime: null,        // 开始时间
-    seedGoodsTime: null,    // 交货时间
+    seedGoodsTime: null,    // 交货完成时间
     // reserve1: null          //结算方式
     bizId: null,
     code: null
@@ -38,6 +38,7 @@ export class SharedService {
 
   public Form2: any = [
     {
+      checked: false,
       secCode: null,
       productList: [],
       productCode: null,
@@ -59,6 +60,7 @@ export class SharedService {
       remark: null
     },
     {
+      checked: false,
       secCode: null,
       productList: [],
       productCode: null,
@@ -80,6 +82,7 @@ export class SharedService {
       remark: null
     },
     {
+      checked: false,
       secCode: null,
       productList: [],
       productCode: null,
@@ -110,7 +113,7 @@ export class SharedService {
     endTime: null,        // 截止时间
     // publishTime: null,
     startTime: null,        // 开始时间
-    seedGoodsTime: null,    // 交货时间
+    seedGoodsTime: null,    // 交货完成时间
     // reserve1: null          //结算方式
     sysVersion: null
   };

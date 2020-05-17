@@ -1,0 +1,57 @@
+.resupply-detail {
+    height               : 100%;
+    background           : white;
+    display              : grid;
+    grid-column-gap      : 5px;
+    grid-template-rows   : 32px 36px 32px 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas  :
+        "buttons    buttons     buttons"
+        "supplierquery  fircategoryquery   organizequery"
+        "suppliertitle  fircategorytitle   organizetitle"
+        "supplierlist   fircategorylist    organizelist";
+
+    .resupply-detail-btnarea {
+        border   : 1px solid #BDC3C7;
+        grid-area: buttons;
+    }
+
+    .resupply-detail-supplierquery {
+        padding  : 2px;
+        grid-area: supplierquery;
+    }
+
+    .resupply-detail-suppliertitle {
+        grid-area: suppliertitle;
+    }
+
+    .resupply-detail-supplierlist {
+        grid-area: supplierlist;
+    }
+
+    .resupply-detail-fircategoryquery {
+        padding  : 2px;
+        grid-area: fircategoryquery;
+    }
+
+    .resupply-detail-fircategorytitle {
+        grid-area: fircategorytitle;
+    }
+
+    .resupply-detail-fircategorylist {
+        grid-area: fircategorylist;
+    }
+
+    .resupply-detail-organizequery {
+        padding  : 2px;
+        grid-area: organizequery;
+    }
+
+    .resupply-detail-organizetitle {
+        grid-area: organizetitle;
+    }
+
+    .resupply-detail-organizelist {
+        grid-area: organizelist;
+    }
+}

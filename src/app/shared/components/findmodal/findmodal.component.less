@@ -1,0 +1,42 @@
+.ls-find-form {
+    width                   : 100%;
+    height                  : 500px;
+    // background           : white;
+    display                 : grid;
+    grid-template-rows      : 38px 32px 1fr 28px;
+    grid-template-columns   : 1fr;
+    grid-template-areas     :
+        "tiaojian"
+        "yusuanfu"
+        "listarea"
+        "pagarea";
+}
+
+.ls-find-form-cond {
+    // border-bottom: 1px solid #BDC3C7;
+    border          : 1px solid #BDC3C7;
+    grid-area       : tiaojian;
+    padding         : 0px 12px;
+}
+
+.ls-find-form-oprat {
+    grid-area    : yusuanfu;
+    display      : grid;
+    justify-items: center;
+    align-items  : center;
+    border-left  : 1px solid #BDC3C7;
+    border-right : 1px solid #BDC3C7;
+}
+
+.ls-find-form-list {
+    grid-area: listarea;
+}
+
+.ls-find-form-pag {
+    margin-top: 4px;
+    grid-area : pagarea;
+}
+
+nz-radio {
+    margin-right: 20px;
+}

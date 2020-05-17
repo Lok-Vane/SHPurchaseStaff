@@ -1,0 +1,14 @@
+<div clsass="ls-toptoolbar">
+    <ng-container *ngFor="let btncategory of buttonCategorys">
+        <nz-button-group>
+            <ng-container *ngFor="let btnitem of btncategory.buttonItems">
+                <button nz-button nzSize="small" [nzType]="btnitem.type" (click)="doClick(btnitem.clickValue)"><i
+                        nz-icon [nzType]="btnitem.iconType" nzTheme="outline"></i>{{btnitem.name}}</button>
+            </ng-container>
+        </nz-button-group>
+    </ng-container>
+    <!-- <button nz-button nzSize="small" (click)="doClick(1)">新增</button>
+    <button nz-button nzSize="small" (click)="doClick(3)">修改</button>
+    <button nz-button nzSize="small" nzType="danger" (click)="doClick(2)">删除</button> -->
+</div>
+<div class="link-top"></div>

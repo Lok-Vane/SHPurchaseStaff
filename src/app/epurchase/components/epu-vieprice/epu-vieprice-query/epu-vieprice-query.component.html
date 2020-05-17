@@ -1,0 +1,39 @@
+<nz-modal nzMaskClosable="false" [nzVisible]="isVisible" nzTitle="查询" (nzOnCancel)="handleCancel()"
+    (nzOnOk)="handleOk()">
+    <form nz-form class="ls-list-form-formarea" nzGutter="8" [formGroup]="theFormGroup">
+        <nz-form-item>
+            <nz-form-label nzFor="projectName" nzSpan="4">项目名称</nz-form-label>
+            <nz-form-control nzSpan="19">
+                <input [nzSize]="controlSize" nz-input id="projectName" formControlName="projectName"
+                    oninput="value=value.replace(/\s+/g,'')">
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="orgName" nzSpan="4">组织名称</nz-form-label>
+            <nz-form-control nzSpan="19">
+                <input [nzSize]="controlSize" nz-input id="orgName" formControlName="orgName"
+                    oninput="value=value.replace(/\s+/g,'')">
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="productName" nzSpan="4">材料名称</nz-form-label>
+            <nz-form-control nzSpan="19">
+                <input [nzSize]="controlSize" nz-input id="productName" formControlName="productName">
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="specifications" nzSpan="4">规格型号</nz-form-label>
+            <nz-form-control nzSpan="19">
+                <input [nzSize]="controlSize" nz-input id="specifications" formControlName="specifications"
+                    oninput="value=value.replace(/\s+/g,'')">
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzFor="isSuccess" nzSpan="4">项目状态</nz-form-label>
+            <nz-form-control nzSpan="19">
+                <input [nzSize]="controlSize" nz-input placeholder="1：竞价中；2：竞价成功；3：无合格报价" id="isSuccess"
+                    formControlName="isSuccess" oninput="value=value.replace(/\s+/g,'')">
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</nz-modal>
