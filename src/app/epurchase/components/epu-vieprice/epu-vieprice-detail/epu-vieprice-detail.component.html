@@ -174,8 +174,8 @@
                         <td>
                             <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
                                 nz-tooltip
-                                nzTooltipTitle="{{item.purchaseNum.toFixed(2).toString()}}&nbsp;{{item.metering}}">
-                                {{item.purchaseNum.toFixed(2).toString()}}&nbsp;{{item.metering}}</div>
+                                nzTooltipTitle="{{item.purchaseNum.toFixed(2).toString()}}">
+                                {{item.purchaseNum.toFixed(2).toString()}}</div>
                         </td>
                         <td>
                             <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
@@ -217,15 +217,9 @@
                         <td>
                             <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
                                 nz-tooltip
-                                nzTooltipTitle="{{item.highestLimit.toFixed(2).toString()}}&nbsp;元/{{item.metering}}">
-                                {{item.highestLimit.toFixed(2).toString()}}&nbsp;元/{{item.metering}}</div>
+                                nzTooltipTitle="{{item.highestLimit.toFixed(2).toString()}}&nbsp;元">
+                                {{item.highestLimit.toFixed(2).toString()}}&nbsp;元</div>
                         </td>
-                        <!-- <td>
-                            <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
-                                nz-tooltip
-                                nzTooltipTitle="±&nbsp;{{item.errorLimit.toFixed(2).toString()}}&nbsp;{{item.metering}}">
-                                ±&nbsp;{{item.errorLimit.toFixed(2).toString()}}&nbsp;{{item.metering}}</div>
-                        </td> -->
                         <td>
                             <div style="display: flex;justify-content: center;align-items: center;width: 150px;"
                                 nz-tooltip nzTooltipTitle="{{item.reserve1}}">
@@ -239,20 +233,20 @@
                         <td>
                             <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
                                 nz-tooltip
-                                nzTooltipTitle="{{item.distribute1.toFixed(2).toString()}}&nbsp;{{item.metering}}">
-                                {{item.distribute1.toFixed(2).toString()}}&nbsp;{{item.metering}}</div>
+                                nzTooltipTitle="{{item.distribute1.toFixed(2).toString()}}">
+                                {{item.distribute1.toFixed(2).toString()}}</div>
                         </td>
                         <td>
                             <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
                                 nz-tooltip
-                                nzTooltipTitle="{{item.distribute2.toFixed(2).toString()}}&nbsp;{{item.metering}}">
-                                {{item.distribute2.toFixed(2).toString()}}&nbsp;{{item.metering}}</div>
+                                nzTooltipTitle="{{item.distribute2.toFixed(2).toString()}}">
+                                {{item.distribute2.toFixed(2).toString()}}</div>
                         </td>
                         <td>
                             <div style="display: flex;justify-content: center;align-items: center;width: 100px;"
                                 nz-tooltip
-                                nzTooltipTitle="{{item.distribute3.toFixed(2).toString()}}&nbsp;{{item.metering}}">
-                                {{item.distribute3.toFixed(2).toString()}}&nbsp;{{item.metering}}</div>
+                                nzTooltipTitle="{{item.distribute3.toFixed(2).toString()}}">
+                                {{item.distribute3.toFixed(2).toString()}}</div>
                         </td>
                     </tr>
                 </tbody>
@@ -268,9 +262,9 @@
             [finishWorld]="'已截止'"></app-countdown>
 
         <div style="display: flex;">
-
+            <!-- *ngIf='showbtn' -->
             <button nz-button style="margin: 10px 10px" (click)="SHOW()" [nzSize]="'small'" id="showbtn"
-                *ngIf='showbtn'>{{buttonMsg}}</button>
+                [disabled]="!showbtn">{{buttonMsg}}</button>
 
             <button nzType='primary' nz-button style="margin: 10px 10px" (click)=toResult() [nzSize]="'small'"
                 *ngIf="getTimeStamp(data.finalTime)<NOW">查看竞价结果</button>

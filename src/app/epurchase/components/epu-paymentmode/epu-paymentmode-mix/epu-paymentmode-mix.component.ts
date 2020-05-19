@@ -34,7 +34,7 @@ export class EpuPaymentModeMixComponent implements OnInit, OnDestroy {
     // epuPaymentModeGrid_Grid
     @ViewChild('epuPaymentModeGrid', { static: true }) epuPaymentModeGrid: any;
     // epuPaymentModeGrid_Selectlist
-    selectEpuPaymentModeList: EpuDictionary[];
+    selectEpuPaymentModeList: EpuDictionary[] = [];
     // epuPaymentModeGrid_ColDef
     epuPaymentModeGridCols: ColDef[];
 
@@ -163,17 +163,21 @@ export class EpuPaymentModeMixComponent implements OnInit, OnDestroy {
 
     // 点击修改
     onBtnEditClick(): void {
-        this.subscriptions.push(
-            this.daoApi.doPostRequest(this.epuSetApi.DictionaryModifyBef, this.epuPaymentModeForm.value.bizId).subscribe(
-                (res: any) => {
-                    if (res.status && res.status === 1) {
-                        this.isEditMode = true;
-                        this.isCreateMode = false;
-                        this.epuPaymentModeForm.patchValue(res.data);
+        if (this.selectEpuPaymentModeList.length !== 0) {
+            this.subscriptions.push(
+                this.daoApi.doPostRequest(this.epuSetApi.DictionaryModifyBef, this.epuPaymentModeForm.value.bizId).subscribe(
+                    (res: any) => {
+                        if (res.status && res.status === 1) {
+                            this.isEditMode = true;
+                            this.isCreateMode = false;
+                            this.epuPaymentModeForm.patchValue(res.data);
+                        }
                     }
-                }
-            )
-        );
+                )
+            );
+        } else {
+            this.messageApi.create('warning', '未选中需要修改的数据！');
+        }
     }
 
     // 点击批量删除

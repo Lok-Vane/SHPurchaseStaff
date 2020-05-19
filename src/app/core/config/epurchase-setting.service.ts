@@ -50,6 +50,7 @@ export class EPurchaseSettingService {
     public readonly SupplierRecovery = `${this.baseUrl}/supplierinfo/recovery`;  // 恢复
     public readonly SupplierBatchRecovery = `${this.baseUrl}/supplierinfo/batchrecovery`;  // 批量恢复
     public readonly SupplierSearch = `${this.baseUrl}/supplierinfo/search`;  // 查询
+    public readonly SupplierExport = `${this.baseUrl}/supplierinfo/exporttoexcel`;  // 导出
 
     // 材料档案
     public readonly MaterialCreateBef = `${this.baseUrl}/product/beforecreate`;  // 创建前
@@ -70,8 +71,10 @@ export class EPurchaseSettingService {
     public readonly ReSupplyRecovery = `${this.baseUrl}/supplierservices/recovery`;  // 恢复
     public readonly ReSupplyBatchRecovery = `${this.baseUrl}/supplierservices/batchrecovery`;  // 批量恢复
     public readonly ReSupplySearch = `${this.baseUrl}/supplierservices/search`;  // 查询
+    public readonly ReSupplyExport = `${this.baseUrl}/supplierservices/exporttoexcel`;  // 导出
 
     // 竞价项目
+    public readonly ViePriceExport = `${this.baseUrl}/biddingproject/exporttoexcel`;  // 导出
     public readonly ViePriceCreateBef = `${this.baseUrl}/biddingproject/beforecreate`;  // 新增前
     public readonly ViePriceCreate = `${this.baseUrl}/biddingproject/create`;  // 新增
     public readonly ViePriceModifyBef = `${this.baseUrl}/biddingproject/beforemodify`;  // 修改
@@ -91,6 +94,7 @@ export class EPurchaseSettingService {
     public readonly EPurchaseProjSupPar = `${this.baseUrl}/partproject/suppliersearch`;  // 获取供应商已参与项目
 
     public readonly EPurchaseGetResult = `${this.baseUrl}/bcdistribution/getresult`;  // 获取项目竞价结果 内部
+    public readonly EPurchaseExportPDF = `${this.baseUrl}/bcdistribution/exporttopdf`;  // 导出项目竞价结果 内部
     public readonly EPurchaseGetResultSup = `${this.baseUrl}/bcdistribution/suppliersearch`;  // 获取项目竞价结果 供应商
 
     public readonly EPurchaseBidOffer = `${this.baseUrl}/biddingoffer/create`;  // 供应商新增报价

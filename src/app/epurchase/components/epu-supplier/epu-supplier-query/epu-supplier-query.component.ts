@@ -40,7 +40,7 @@ export class EpuSupplierQueryComponent implements OnInit {
     handleOk(): void {
         const data = this.theFormGroup.value;
         const result = [
-            { fieldName: 'code', operator: 'equal', fieldValue: data.code },
+            { fieldName: 'code', operator: 'like', fieldValue: data.code },
             { fieldName: 'supplierName', operator: 'like', fieldValue: data.supplierName },
             { fieldName: 'state', operator: 'equal', fieldValue: data.state }
         ];

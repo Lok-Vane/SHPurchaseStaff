@@ -32,18 +32,42 @@ export class EpuViePriceResultComponent implements OnInit {
     priceColumnDefs: ColDef[] = [
         // { headerCheckboxSelection: true, checkboxSelection: true, width: 40 },
         { headerName: '排名', field: 'ranking', sortable: true, filter: true, resizable: true, width: 70 },
-        { headerName: '供应商名称', field: 'supplierName', sortable: true, filter: true, resizable: true, width: 120 },
-        { headerName: '税后总报价', field: 'quotedPrice', sortable: true, filter: true, resizable: true, width: 120 },
-        { headerName: '税后料品报价', field: 'offerPrice', sortable: true, filter: true, resizable: true, width: 120 },
-        { headerName: '料品税率', field: 'quotedPriceTax', sortable: true, filter: true, resizable: true, width: 120 },
-        { headerName: '税前料品报价', field: 'price', sortable: true, filter: true, resizable: true, width: 120 },
+        { headerName: '供应商名称', field: 'supplierName', sortable: true, filter: true, resizable: true, width: 200 },
+        {
+            headerName: '税后总报价', field: 'quotedPrice', sortable: true, filter: true, resizable: true, width: 120,
+            valueFormatter: RMBValueFormat
+        },
+        {
+            headerName: '税后料品报价', field: 'offerPrice', sortable: true, filter: true, resizable: true, width: 120,
+            valueFormatter: RMBValueFormat
+        },
+        {
+            headerName: '料品税率', field: 'quotedPriceTax', sortable: true, filter: true, resizable: true, width: 120,
+            valueFormatter: percentageValueFormat
+        },
+        {
+            headerName: '税前料品报价', field: 'price', sortable: true, filter: true, resizable: true, width: 120,
+            valueFormatter: RMBValueFormat
+        },
         { headerName: '票制', field: 'isOneVote', sortable: true, filter: true, resizable: true, width: 70 },
-        { headerName: '税后运费', field: 'freightQuotedPrice', sortable: true, filter: true, resizable: true, width: 120 },
-        { headerName: '运费税率', field: 'freightQuotedTax', sortable: true, filter: true, resizable: true, width: 120 },
-        { headerName: '税前运费', field: 'freightPrice', sortable: true, filter: true, resizable: true, width: 120 },
+        {
+            headerName: '税后运费', field: 'freightQuotedPrice', sortable: true, filter: true, resizable: true, width: 120,
+            valueFormatter: RMBValueFormat
+        },
+        {
+            headerName: '运费税率', field: 'freightQuotedTax', sortable: true, filter: true, resizable: true, width: 120,
+            valueFormatter: percentageValueFormat
+        },
+        {
+            headerName: '税前运费', field: 'freightPrice', sortable: true, filter: true, resizable: true, width: 120,
+            valueFormatter: RMBValueFormat
+        },
         { headerName: '结算方式', field: 'settlement', sortable: true, filter: true, resizable: true, width: 120 },
         { headerName: '分配量', field: 'distributionNum', sortable: true, filter: true, resizable: true, width: 120 },
-        { headerName: '总金额', field: 'amountMoney', sortable: true, filter: true, resizable: true, width: 120 },
+        {
+            headerName: '总金额', field: 'amountMoney', sortable: true, filter: true, resizable: true, width: 120,
+            valueFormatter: RMBValueFormat
+        },
     ];
     constructor(
         public router: Router,
@@ -94,12 +118,8 @@ export class EpuViePriceResultComponent implements OnInit {
                             producName: this.getProduct(this.Form1.contentDtos[i].bizId, 1),
                             specifications: this.getProduct(this.Form1.contentDtos[i].bizId, 2),
                             metering: this.getProduct(this.Form1.contentDtos[i].bizId, 3),
-                            purchaseNum: Number(this.getProduct(this.Form1.contentDtos[i].bizId, 5)).toFixed(2).toString()
-                                + ' ' + this.getProduct(this.Form1.contentDtos[i].bizId, 3),
-                            // errorLimit: '± ' + Number(this.getProduct(this.Form1.contentDtos[i].bizId, 4)).toFixed(2).toString()
-                            //   + ' ' + this.getProduct(this.Form1.contentDtos[i].bizId, 3),
+                            purchaseNum: this.getProduct(this.Form1.contentDtos[i].bizId, 5),
                             remark: this.getProduct(this.Form1.contentDtos[i].bizId, 6),
-                            // pcId: this.getProduct(this.contentDtos[i].bizId, 7),
                         });
 
                         // 供应商最终出价详情   resultPrice[i][j]为第i+1条采购内容，第j+1名的出价
@@ -130,26 +150,20 @@ export class EpuViePriceResultComponent implements OnInit {
                         temp.sort(compare);
                         // console.log(temp)
                         for (j; j < temp.length; j++) {
-                            this.resultPrice[i].push({});
+                            this.resultPrice[i].push(temp[j]);
                             this.resultPrice[i][j].ranking = j + 1;
-                            this.resultPrice[i][j].isOneVote = temp[j].isOneVote;
-                            this.resultPrice[i][j].freightPrice = temp[j].freightPrice.toFixed(2).toString()
-                                + ' 元/' + this.getProduct(this.Form1.contentDtos[i].bizId, 3);
-                            this.resultPrice[i][j].supplierName = temp[j].supplierName;
-                            this.resultPrice[i][j].price
-                                = temp[j].price.toFixed(2).toString() + ' 元/' + this.getProduct(this.Form1.contentDtos[i].bizId, 3);
-                            this.resultPrice[i][j].quotedPriceTax = (temp[j].quotedPriceTax * 100).toFixed(2).toString() + ' %';
-                            this.resultPrice[i][j].quotedPrice = temp[j].quotedPrice.toFixed(2).toString()
-                                + ' 元/' + this.getProduct(this.Form1.contentDtos[i].bizId, 3);
-                            this.resultPrice[i][j].distributionNum = temp[j].distributionNum.toFixed(2).toString()
-                                + ' ' + this.getProduct(this.Form1.contentDtos[i].bizId, 3);
-                            this.resultPrice[i][j].amountMoney = temp[j].amountMoney.toFixed(2).toString() + ' 元';
-                            this.resultPrice[i][j].settlement = temp[j].settlement;
-                            this.resultPrice[i][j].offerPrice = temp[j].offerPrice.toFixed(2).toString()
-                                + ' 元/' + this.getProduct(this.Form1.contentDtos[i].bizId, 3);
-                            this.resultPrice[i][j].freightQuotedTax = (temp[j].freightQuotedTax * 100).toFixed(2).toString() + ' %';
-                            this.resultPrice[i][j].freightQuotedPrice = temp[j].freightQuotedPrice.toFixed(2).toString()
-                                + ' 元/' + this.getProduct(this.Form1.contentDtos[i].bizId, 3);
+                            // this.resultPrice[i][j].isOneVote = temp[j].isOneVote;
+                            // this.resultPrice[i][j].freightPrice = temp[j].freightPrice;
+                            // this.resultPrice[i][j].supplierName = temp[j].supplierName;
+                            // this.resultPrice[i][j].price = temp[j].price;
+                            // this.resultPrice[i][j].quotedPriceTax = temp[j].quotedPriceTax;
+                            // this.resultPrice[i][j].quotedPrice = temp[j].quotedPrice;
+                            // this.resultPrice[i][j].distributionNum = temp[j].distributionNum;
+                            // this.resultPrice[i][j].amountMoney = temp[j].amountMoney;
+                            // this.resultPrice[i][j].settlement = temp[j].settlement;
+                            // this.resultPrice[i][j].offerPrice = temp[j].offerPrice;
+                            // this.resultPrice[i][j].freightQuotedTax = temp[j].freightQuotedTax;
+                            // this.resultPrice[i][j].freightQuotedPrice = temp[j].freightQuotedPrice;
                         }
 
                     }
@@ -228,4 +242,27 @@ export class EpuViePriceResultComponent implements OnInit {
         }
     }
 
+    exportToPdf() {
+        alert('未实现该功能！');
+    }
+
 }
+
+// 百分比加工
+function percentageValueFormat(params) {
+    if (params.value === 0) {
+        return '0%';
+    } else {
+        return (params.value * 100).toFixed(2).toString() + '%';
+    }
+}
+
+// 金额加工
+function RMBValueFormat(params) {
+    if (params.value === 0) {
+        return '0元';
+    } else {
+        return params.value.toFixed(2).toString() + '元';
+    }
+}
+

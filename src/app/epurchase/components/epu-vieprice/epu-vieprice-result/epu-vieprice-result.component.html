@@ -66,18 +66,22 @@
             <ng-container *ngFor="let item of productInfoList;let i = index">
                 <div class="FormBox">
                     <div class="Form1">
-                        <ag-grid-angular [enableCellTextSelection]="true" style="width: 100%; height: 80px;" class="ag-theme-balham"
-                            [rowData]="productInfoList[i]" [columnDefs]="productColumnDefs">
+                        <ag-grid-angular [enableCellTextSelection]="true" style="width: 100%; height: 80px;"
+                            class="ag-theme-balham" [rowData]="productInfoList[i]" [columnDefs]="productColumnDefs">
                         </ag-grid-angular>
                     </div>
                     <div class="Form2">
-                        <ag-grid-angular [enableCellTextSelection]="true" style="width: 100%; height: 140px;" class="ag-theme-balham"
-                            [rowData]="resultPrice[i]" [columnDefs]="priceColumnDefs">
+                        <ag-grid-angular [enableCellTextSelection]="true" style="width: 100%; height: 140px;"
+                            class="ag-theme-balham" [rowData]="resultPrice[i]" [columnDefs]="priceColumnDefs">
                         </ag-grid-angular>
                     </div>
                 </div>
 
             </ng-container>
+        </span>
+
+        <span *ngIf='productInfoList.length>0' class="exportBtn">
+            <button nz-button nzSize="small" nzType="primary" (click)='exportToPdf()'><i nz-icon nzType="export" nzTheme="outline"></i>导出pdf</button>
         </span>
 
     </div>

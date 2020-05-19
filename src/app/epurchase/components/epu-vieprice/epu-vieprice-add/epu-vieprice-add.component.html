@@ -48,8 +48,7 @@
             <nz-descriptions-item nzTitle="项目名称">
                 <span style="display:flex; align-items:center">
                     <strong style="color: red;">*&nbsp;</strong>
-                    <textarea nz-input placeholder="例：广东三和钢棒竞价项目20201231" [(ngModel)]="shared.Form1.projectName"
-                        style="min-width: 150px;" oninput="value=value.replace(/\s+/g,'')" rows="1"></textarea>
+                    <input readonly nz-input [(ngModel)]="shared.Form1.projectName" style="min-width: 150px;">
                 </span>
             </nz-descriptions-item>
 
@@ -197,7 +196,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let data of shared.Form2 ;let i = index">
+                    <tr *ngFor="let data of shared.Form2 ;let i = index" (click)='lineClick(i)'>
                         <td nzLeft="0px">
                             <label nz-checkbox [(ngModel)]="shared.Form2[i].checked"
                                 (ngModelChange)='onCheckedChange2()'></label>
@@ -224,7 +223,7 @@
                             </nz-select>
                         </td>
                         <td>
-                            <input nz-input disabled='true' style="width: 100px;" type="text"
+                            <input nz-input readonly style="width: 100px;" type="text"
                                 [(ngModel)]="shared.Form2[i].metering">
                         </td>
                         <td>
@@ -314,7 +313,7 @@
                         nzTooltipTitle="删行" style="margin: 10px 0px 10px 15px" id="btn_p" nz-button nzShape="circle"><i
                             nz-icon nzType="minus" nzTheme="outline"></i></button>
 
-                    <button nzType='primary' nzGhost nzGhost nz-tooltip nzTooltipTitle="增行" [nzSize]="'small'"
+                    <button nzType='primary' nzGhost nz-tooltip nzTooltipTitle="增行" [nzSize]="'small'"
                         style="margin: 10px 40px 10px 15px" (click)="add()" id="btn_p" nz-button nzShape="circle"><i
                             nz-icon nzType="plus" nzTheme="outline"></i></button>
                 </div>

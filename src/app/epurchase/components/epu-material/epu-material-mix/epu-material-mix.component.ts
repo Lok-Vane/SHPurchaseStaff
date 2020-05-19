@@ -37,7 +37,7 @@ export class EpuMaterialMixComponent implements OnInit, OnDestroy {
     // epuMaterialGrid_Grid
     @ViewChild('epuMaterialGrid', { static: true }) epuMaterialGrid: any;
     // epuMaterialGrid_Selectlist
-    selectEpuMaterialList: EpuMaterial[];
+    selectEpuMaterialList: EpuMaterial[] = [];
     // epuMaterialGrid_ColDef
     epuMaterialGridCols: ColDef[];
 
@@ -177,18 +177,22 @@ export class EpuMaterialMixComponent implements OnInit, OnDestroy {
 
     // 点击修改
     onBtnEditClick(): void {
-        this.subscriptions.push(
-            this.daoApi.doPostRequest(this.epuSetApi.MaterialModifyBef, this.epuMaterialForm.value.bizId).subscribe(
-                (res: any) => {
-                    if (res.status && res.status === 1) {
-                        this.isEditMode = true;
-                        this.isCreateMode = false;
-                        this.epuMaterialForm.patchValue(res.data);
-                        this.categorySecondList = [];
+        if (this.selectEpuMaterialList.length !== 0) {
+            this.subscriptions.push(
+                this.daoApi.doPostRequest(this.epuSetApi.MaterialModifyBef, this.epuMaterialForm.value.bizId).subscribe(
+                    (res: any) => {
+                        if (res.status && res.status === 1) {
+                            this.isEditMode = true;
+                            this.isCreateMode = false;
+                            this.epuMaterialForm.patchValue(res.data);
+                            this.categorySecondList = [];
+                        }
                     }
-                }
-            )
-        );
+                )
+            );
+        } else {
+            this.messageApi.create('warning', '未选中需要修改的数据！');
+        }
     }
 
     // 点击批量删除

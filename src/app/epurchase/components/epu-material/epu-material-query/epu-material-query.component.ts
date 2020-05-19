@@ -41,7 +41,7 @@ export class EpuMaterialQueryComponent implements OnInit {
     handleOk(): void {
         const data = this.theFormGroup.value;
         const result = [
-            { fieldName: 'code', operator: 'equal', fieldValue: data.code },
+            { fieldName: 'code', operator: 'like', fieldValue: data.code },
             { fieldName: 'productName', operator: 'like', fieldValue: data.productName },
             { fieldName: 'specifications', operator: 'like', fieldValue: data.specifications },
             { fieldName: 'state', operator: 'equal', fieldValue: data.state }

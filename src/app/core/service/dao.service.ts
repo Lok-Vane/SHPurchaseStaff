@@ -58,4 +58,17 @@ export class DaoService {
     doDeleteRequest(apiUrl: string, data: any) {
         return this.http.delete(apiUrl, data);
     }
+
+    /**
+     * Download请求
+     * @param apiUrl Api接口地址
+     * @param params 参数/数据
+     */
+    doDownloadRequest(apiUrl: string, params?: any) {
+        if (params) {
+            return this.http.post(apiUrl, params, { responseType: 'blob', observe: 'response' });
+        } else {
+            return this.http.post(apiUrl, {}, { responseType: 'blob', observe: 'response' });
+        }
+    }
 }

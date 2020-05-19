@@ -34,7 +34,7 @@ export class EpuSettlementModeQueryComponent implements OnInit {
     handleOk(): void {
         const data = this.theFormGroup.value;
         const result = [
-            { fieldName: 'code', operator: 'equal', fieldValue: data.code },
+            { fieldName: 'code', operator: 'like', fieldValue: data.code },
             { fieldName: 'value', operator: 'like', fieldValue: data.value },
             // { fieldName: 'state', operator: 'equal', fieldValue: data.state },
             // { fieldName: 'classify', operator: 'equal', fieldValue: data.classify },

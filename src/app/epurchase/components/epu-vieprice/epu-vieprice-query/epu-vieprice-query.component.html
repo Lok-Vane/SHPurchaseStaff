@@ -31,8 +31,12 @@
         <nz-form-item>
             <nz-form-label nzFor="isSuccess" nzSpan="4">项目状态</nz-form-label>
             <nz-form-control nzSpan="19">
-                <input [nzSize]="controlSize" nz-input placeholder="1：竞价中；2：竞价成功；3：无合格报价" id="isSuccess"
-                    formControlName="isSuccess" oninput="value=value.replace(/\s+/g,'')">
+                <!-- <input [nzSize]="controlSize" nz-input placeholder="1：竞价中；2：竞价成功；3：无合格报价" id="isSuccess"
+                    formControlName="isSuccess" oninput="value=value.replace(/\s+/g,'')"> -->
+                <nz-select [nzSize]="controlSize" style="width: 100%;" id="isSuccess" formControlName="isSuccess">
+                    <nz-option *ngFor="let o of isSuccessList" [nzValue]="o.value" [nzLabel]="o.label">
+                    </nz-option>
+                </nz-select>
             </nz-form-control>
         </nz-form-item>
     </form>

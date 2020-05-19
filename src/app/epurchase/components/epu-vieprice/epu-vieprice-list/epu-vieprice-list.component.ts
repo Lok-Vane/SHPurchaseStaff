@@ -26,9 +26,10 @@ export class EpuViePriceListComponent implements OnInit, OnDestroy {
     // epuViePriceGrid_Grid
     @ViewChild('epuViePriceGrid', { static: true }) epuViePriceGrid: any;
     // epuViePriceGrid_Selectlist
-    public selectDataList: any;
+    public selectDataList: any[] = [];
     // epuViePriceGrid_ColDef
     public epuViePriceGridCols: ColDef[];
+    selectedBizIdString = '';
 
     // inject the services
     constructor(
@@ -52,7 +53,7 @@ export class EpuViePriceListComponent implements OnInit, OnDestroy {
             { headerName: '项目名称', field: 'projectName', width: 250 },
             { headerName: '项目状态', field: 'isSuccess_display', width: 150 },
             { headerName: '组织编码', field: 'orgCode', width: 100 },
-            { headerName: '组织全称', field: 'orgName', width: 200 },
+            // { headerName: '组织全称', field: 'orgName', width: 200 },
             { headerName: '组织简称', field: 'orgSName', width: 100 },
             // { headerName: '采购类别', field: 'category', width: 150 },
             { headerName: '发布时间', field: 'releaseTime', width: 150 },
@@ -60,14 +61,14 @@ export class EpuViePriceListComponent implements OnInit, OnDestroy {
             { headerName: '竞价截止时间', field: 'endTime', width: 150 },
             { headerName: '最晚发货时间', field: 'seedGoodsTime', width: 150 },
             { headerName: '实际截止时间', field: 'finalTime', width: 150 },
-            { headerName: '总金额', field: 'totalAmount', width: 100 },
+            { headerName: '总金额', field: 'totalAmount', valueFormatter: RMBValueFormat, width: 100 },
             { headerName: '材料编码', field: 'productCode', width: 150 },
             { headerName: '材料名称', field: 'productName', width: 150 },
             { headerName: '规格型号', field: 'specifications', width: 150 },
             { headerName: '计量单位', field: 'metering', width: 150 },
             { headerName: '采购数量', field: 'purchaseNum', width: 100 },
-            { headerName: '降价阶梯', field: 'dropPrice', width: 100 },
-            { headerName: '最高出价限制', field: 'highestLimit', width: 100 },
+            { headerName: '降价阶梯', field: 'dropPrice', valueFormatter: RMBValueFormat, width: 100 },
+            { headerName: '最高出价限制', field: 'highestLimit', valueFormatter: RMBValueFormat, width: 100 },
             { headerName: '第一名分配量', field: 'distribute1', width: 100 },
             { headerName: '第二名分配量', field: 'distribute2', width: 100 },
             { headerName: '第三名分配量', field: 'distribute3', width: 100 },
@@ -91,6 +92,11 @@ export class EpuViePriceListComponent implements OnInit, OnDestroy {
     // Grid 选择改变
     onEpuViePriceGridSelectChange(params: any): void {
         this.selectDataList = params;
+        this.selectedBizIdString = '';
+        let i: number; i = 0;
+        for (i; i < this.selectDataList.length; i++) {
+            this.selectedBizIdString += this.selectDataList[i].projectName + ',';
+        }
     }
 
     // 订阅按钮点击
@@ -105,14 +111,14 @@ export class EpuViePriceListComponent implements OnInit, OnDestroy {
             case 'search':
                 this.onBtnQueryClick();
                 break;
-            // case 'delete':
-            //     this.onBtnBatchDelClick();
-            //     break;
             case 'detail':
                 this.onBtnDetailClick();
                 break;
             case 'result':
                 this.onBtnResultClick();
+                break;
+            case 'export':
+                this.onBtnBatchExpClick();
                 break;
             default:
                 this.messageService.error('未实现该功能');
@@ -124,6 +130,8 @@ export class EpuViePriceListComponent implements OnInit, OnDestroy {
     onBtnDetailClick(): void {
         if (this.selectDataList && this.selectDataList.length > 1) {
             this.messageService.error('详情只能选择一条数据');
+        } else if (this.selectDataList.length === 0) {
+            this.messageService.error('请选择一条数据');
         } else {
             this.router.navigate(['/epu/viepricedetail', this.selectDataList[0].bizId]);
         }
@@ -133,9 +141,21 @@ export class EpuViePriceListComponent implements OnInit, OnDestroy {
     onBtnResultClick(): void {
         if (this.selectDataList && this.selectDataList.length > 1) {
             this.messageService.error('详情只能选择一条数据');
+        } else if (this.selectDataList.length === 0) {
+            this.messageService.error('请选择一条数据');
         } else {
             this.router.navigate(['/epu/viepriceresult', this.selectDataList[0].bizId]);
         }
+    }
+
+
+    // 点击导出
+    onBtnBatchExpClick(): void {
+        this.modalService.confirm({
+            nzTitle: '<i>' + '您确认要导出吗？' + '</i>',
+            nzOkType: 'primary',
+            nzOnOk: () => this.doBatchExp()
+        });
     }
 
     // 新增
@@ -146,17 +166,12 @@ export class EpuViePriceListComponent implements OnInit, OnDestroy {
 
     // 修改
     onBtnEditClick(): void {
-        this.router.navigate(['/epu/viepriceedit', this.selectDataList[0].bizId]);
+        if (this.selectDataList.length !== 0) {
+            this.router.navigate(['/epu/viepriceedit', this.selectDataList[0].bizId]);
+        } else {
+            this.messageService.create('warning', '未选中需要修改的数据！');
+        }
     }
-
-    // 批量删除
-    // onBtnBatchDelClick(): void {
-    //     this.modalService.confirm({
-    //         nzTitle: '<i>' + `${this.globalSetApi.delConfirmText}` + '</i>',
-    //         nzOkType: 'danger',
-    //         nzOnOk: () => this.doDelete()
-    //     });
-    // }
 
     // 查询
     onBtnQueryClick(): void {
@@ -176,25 +191,43 @@ export class EpuViePriceListComponent implements OnInit, OnDestroy {
             this.epuViePriceGrid.getDataList();
         }
     }
-
-    // 执行删除
-    // doDelete(): void {
-    //     if (this.selectDataList && this.selectDataList.length > 0) {
-    //         this.subscriptions.push(
-    //             this.daoApi.doPostRequest(this.epuSetApi.ViePriceBatchDel, this.selectDataList)
-    //                 .subscribe(
-    //                     (res: any) => {
-    //                         if (res.status && res.status === 1) {
-    //                             this.epuViePriceGrid.queryData.queryOrder = 'orgName,releaseTime desc';
-    //                             this.epuViePriceGrid.pageIndex = 1;
-    //                             this.epuViePriceGrid.getDataList();
-    //                         }
-    //                     }
-    //                 ));
-    //     } else {
-    //         this.messageService.warning('您未选择数据');
-    //     }
-    // }
+    // 执行导出
+    doBatchExp() {
+        if (this.selectedBizIdString !== null && this.selectedBizIdString !== '') {
+            const postData = {
+                queryFields: '',
+                queryWhere: [
+                    {
+                        fieldName: 'projectName',
+                        operator: 'in',
+                        fieldValue: this.selectedBizIdString.substring(0, this.selectedBizIdString.length - 1),
+                    }
+                ],
+                queryOrder: 'releaseTime desc',
+                pageIndex: 0,
+                pageSize: 0
+            };
+            const id = this.messageService.loading(this.globalSetApi.exportingText, { nzDuration: 0 }).messageId;
+            this.daoApi.doDownloadRequest(this.epuSetApi.ViePriceExport, postData)
+                .subscribe(
+                    data => {
+                        this.messageService.remove(id);
+                        const link = document.createElement('a');
+                        const blob = new Blob([data.body], { type: 'text/csv' });
+                        link.setAttribute('href', window.URL.createObjectURL(blob));
+                        link.setAttribute('download', data.headers.get('Content-disposition').split('filename=')[1]);
+                        link.style.visibility = 'hidden';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    }, error => {
+                        this.messageService.remove(id);
+                    }
+                );
+        } else {
+            this.messageService.warning('您未选择数据');
+        }
+    }
 }
 
 // 百分比加工
@@ -202,6 +235,15 @@ function percentageValueFormat(params) {
     if (params.value === 0) {
         return '0%';
     } else {
-        return params.value * 100 + '%';
+        return (params.value * 100).toFixed(2).toString() + '%';
+    }
+}
+
+// 金额加工
+function RMBValueFormat(params) {
+    if (params.value === 0) {
+        return '0元';
+    } else {
+        return params.value.toFixed(2).toString() + '元';
     }
 }

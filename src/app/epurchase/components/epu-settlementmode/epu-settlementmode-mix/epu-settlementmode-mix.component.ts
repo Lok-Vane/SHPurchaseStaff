@@ -34,7 +34,7 @@ export class EpuSettlementModeMixComponent implements OnInit, OnDestroy {
     // epuSettlementModeGrid_Grid
     @ViewChild('epuSettlementModeGrid', { static: true }) epuSettlementModeGrid: any;
     // epuSettlementModeGrid_Selectlist
-    selectEpuSettlementModeList: EpuDictionary[];
+    selectEpuSettlementModeList: EpuDictionary[] = [];
     // epuSettlementModeGrid_ColDef
     epuSettlementModeGridCols: ColDef[];
 
@@ -162,17 +162,21 @@ export class EpuSettlementModeMixComponent implements OnInit, OnDestroy {
 
     // 点击修改
     onBtnEditClick(): void {
-        this.subscriptions.push(
-            this.daoApi.doPostRequest(this.epuSetApi.DictionaryModifyBef, this.epuSettlementModeForm.value.bizId).subscribe(
-                (res: any) => {
-                    if (res.status && res.status === 1) {
-                        this.isEditMode = true;
-                        this.isCreateMode = false;
-                        this.epuSettlementModeForm.patchValue(res.data);
+        if (this.selectEpuSettlementModeList.length !== 0) {
+            this.subscriptions.push(
+                this.daoApi.doPostRequest(this.epuSetApi.DictionaryModifyBef, this.epuSettlementModeForm.value.bizId).subscribe(
+                    (res: any) => {
+                        if (res.status && res.status === 1) {
+                            this.isEditMode = true;
+                            this.isCreateMode = false;
+                            this.epuSettlementModeForm.patchValue(res.data);
+                        }
                     }
-                }
-            )
-        );
+                )
+            );
+        } else {
+            this.messageApi.create('warning', '未选中需要修改的数据！');
+        }
     }
 
     // 点击批量删除

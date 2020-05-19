@@ -14,6 +14,15 @@ export class EpuViePriceQueryComponent implements OnInit {
 
     @Output() sendClick = new EventEmitter();
     controlSize: string;
+    public isSuccessList: { label: string; value: string; }[] = [{
+        label: '未开始或竞价中', value: '1',
+    }, {
+        label: '竞价截止且竞价成功', value: '2',
+    }, {
+        label: '竞价截止且无合格报价', value: '3',
+    }, {
+        label: '全匹配', value: '1,2,3',
+    }];
 
     constructor(
         private fb: FormBuilder,
@@ -30,7 +39,7 @@ export class EpuViePriceQueryComponent implements OnInit {
             productName: [null],
             specifications: [null],
             // 1.竞价中 2.竞价成功 3.无合格报价
-            isSuccess: [null],
+            isSuccess: ['1,2,3'],
         });
     }
 
@@ -41,7 +50,7 @@ export class EpuViePriceQueryComponent implements OnInit {
             { fieldName: 'projectName', operator: this.globalSetApi.like, fieldValue: data.projectName },
             { fieldName: 'orgName', operator: this.globalSetApi.like, fieldValue: data.orgName },
             { fieldName: 'productName', operator: this.globalSetApi.like, fieldValue: data.productName },
-            { fieldName: 'isSuccess', operator: this.globalSetApi.equal, fieldValue: data.isSuccess },
+            { fieldName: 'isSuccess', operator: this.globalSetApi.in, fieldValue: data.isSuccess },
             { fieldName: 'specifications', operator: this.globalSetApi.like, fieldValue: data.specifications }
         ];
         this.sendClick.emit({ clickOkBtn: true, data: result });

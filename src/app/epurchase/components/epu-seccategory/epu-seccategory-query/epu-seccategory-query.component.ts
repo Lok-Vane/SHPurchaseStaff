@@ -41,7 +41,7 @@ export class EpuSecCategoryQueryComponent implements OnInit {
     handleOk(): void {
         const data = this.theFormGroup.value;
         const result = [
-            { fieldName: 'code', operator: 'equal', fieldValue: data.code },
+            { fieldName: 'code', operator: 'like', fieldValue: data.code },
             { fieldName: 'categoryName', operator: 'like', fieldValue: data.categoryName },
             // { fieldName: 'firstCategoryName', operator: 'like', fieldValue: data.firstCategoryName },
             { fieldName: 'state', operator: 'equal', fieldValue: data.state },

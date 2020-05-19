@@ -34,9 +34,10 @@ export class EpuSupplierMixComponent implements OnInit, OnDestroy {
     // epuSupplierGrid_Grid
     @ViewChild('epuSupplierGrid', { static: true }) epuSupplierGrid: any;
     // epuSupplierGrid_Selectlist
-    selectEpuSupplierList: EpuSupplier[];
+    selectEpuSupplierList: EpuSupplier[] = [];
     // epuSupplierGrid_ColDef
     epuSupplierGridCols: ColDef[];
+    selectedBizIdString = '';
 
     constructor(
         private messageApi: NzMessageService,
@@ -97,6 +98,12 @@ export class EpuSupplierMixComponent implements OnInit, OnDestroy {
     // Grid选择变化
     onEpuSupplierGridSelectChange(params: any) {
         this.selectEpuSupplierList = params;
+        this.selectedBizIdString = '';
+        let i: number; i = 0;
+        for (i; i < this.selectEpuSupplierList.length; i++) {
+            this.selectedBizIdString += this.selectEpuSupplierList[i].bizId + ',';
+        }
+        // console.log(this.selectedBizIdString);
         this.isCreateMode = false;
         this.isEditMode = false;
         if (this.selectEpuSupplierList && this.selectEpuSupplierList.length > 0) {
@@ -125,6 +132,9 @@ export class EpuSupplierMixComponent implements OnInit, OnDestroy {
                 break;
             case 'delete':
                 this.onBtnBatchDelClick();
+                break;
+            case 'export':
+                this.onBtnBatchExpClick();
                 break;
             case 'resume':
                 this.onBtnBatchRecClick();
@@ -165,17 +175,21 @@ export class EpuSupplierMixComponent implements OnInit, OnDestroy {
     // 点击修改
     onBtnEditClick(): void {
         const bizId = this.epuSupplierForm.value.bizId;
-        this.subscriptions.push(
-            this.daoApi.doPostRequest(this.epuSetApi.SupplierModifyBef, bizId).subscribe(
-                (res: any) => {
-                    if (res.status && res.status === 1) {
-                        this.isEditMode = true;
-                        this.isCreateMode = false;
-                        this.epuSupplierForm.patchValue(res.data);
+        if (this.selectEpuSupplierList.length !== 0) {
+            this.subscriptions.push(
+                this.daoApi.doPostRequest(this.epuSetApi.SupplierModifyBef, bizId).subscribe(
+                    (res: any) => {
+                        if (res.status && res.status === 1) {
+                            this.isEditMode = true;
+                            this.isCreateMode = false;
+                            this.epuSupplierForm.patchValue(res.data);
+                        }
                     }
-                }
-            )
-        );
+                )
+            );
+        } else {
+            this.messageApi.create('warning', '未选中需要修改的数据！');
+        }
     }
 
     // 点击批量删除
@@ -184,6 +198,15 @@ export class EpuSupplierMixComponent implements OnInit, OnDestroy {
             nzTitle: '<i>' + `${this.globalSetApi.delConfirmText}` + '</i>',
             nzOkType: 'danger',
             nzOnOk: () => this.doBatchDel()
+        });
+    }
+
+    // 点击导出
+    onBtnBatchExpClick(): void {
+        this.modalService.confirm({
+            nzTitle: '<i>' + '您确认要导出吗？' + '</i>',
+            nzOkType: 'primary',
+            nzOnOk: () => this.doBatchExp()
         });
     }
 
@@ -267,6 +290,42 @@ export class EpuSupplierMixComponent implements OnInit, OnDestroy {
                     }
                 )
             );
+        } else {
+            this.messageApi.warning('您未选择数据');
+        }
+    }
+
+    // 执行导出
+    doBatchExp() {
+        if (this.selectedBizIdString !== null && this.selectedBizIdString !== '') {
+            const postData = {
+                queryFields: '',
+                queryWhere: [
+                    {
+                        fieldName: 'bizId',
+                        operator: 'in',
+                        fieldValue: this.selectedBizIdString.substring(0, this.selectedBizIdString.length - 1),
+                    }
+                ],
+                queryOrder: 'supplierName',
+                pageIndex: 0,
+                pageSize: 0
+            };
+            const id = this.messageApi.loading(this.globalSetApi.exportingText, { nzDuration: 0 }).messageId;
+            this.daoApi.doDownloadRequest(this.epuSetApi.SupplierExport, postData)
+                .subscribe(data => {
+                    this.messageApi.remove(id);
+                    const link = document.createElement('a');
+                    const blob = new Blob([data.body], { type: 'text/csv' });
+                    link.setAttribute('href', window.URL.createObjectURL(blob));
+                    link.setAttribute('download', data.headers.get('Content-disposition').split('filename=')[1]);
+                    link.style.visibility = 'hidden';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }, error => {
+                    this.messageApi.remove(id);
+                });
         } else {
             this.messageApi.warning('您未选择数据');
         }

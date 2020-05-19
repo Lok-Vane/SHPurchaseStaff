@@ -114,6 +114,7 @@ export class EpuViePriceAddComponent implements OnInit {
         this.FindOrgList();
         this.FindSettlementList();
         this.FindPaymentList();
+        this.onCheckedChange2();
     }
 
     createProjectName() {
@@ -654,6 +655,16 @@ export class EpuViePriceAddComponent implements OnInit {
             this.indeterminate = true;
 
         }
+    }
+
+    lineClick(index: number) {
+        // this.shared.Form2[index].checked = !this.shared.Form2[index].checked;
+        let i: number; i = 0;
+        for (i; i < this.shared.Form2.length; i++) {
+            this.shared.Form2[i].checked = false;
+        }
+        this.shared.Form2[index].checked = true;
+        this.onCheckedChange2();
     }
 
 }

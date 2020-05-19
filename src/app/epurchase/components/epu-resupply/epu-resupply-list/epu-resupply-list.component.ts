@@ -30,6 +30,7 @@ export class EpuReSupplyListComponent implements OnInit, OnDestroy {
     public selectDataList: EpuReSupply[];
     // epuReSupplyGrid_ColDef
     public epuReSupplyGridCols: ColDef[];
+    selectedBizIdString = '';
 
     // inject the services
     constructor(
@@ -71,6 +72,11 @@ export class EpuReSupplyListComponent implements OnInit, OnDestroy {
     // Grid 选择改变
     onEpuReSupplyGridSelectChange(params: any): void {
         this.selectDataList = params;
+        this.selectedBizIdString = '';
+        let i: number; i = 0;
+        for (i; i < this.selectDataList.length; i++) {
+            this.selectedBizIdString += this.selectDataList[i].bizId + ',';
+        }
     }
 
     // 订阅按钮点击
@@ -87,6 +93,9 @@ export class EpuReSupplyListComponent implements OnInit, OnDestroy {
                 break;
             case 'resume':
                 this.onBtnBatchRecClick();
+                break;
+            case 'export':
+                this.onBtnBatchExpClick();
                 break;
             default:
                 this.messageService.error('未实现该功能');
@@ -115,6 +124,15 @@ export class EpuReSupplyListComponent implements OnInit, OnDestroy {
             nzTitle: '<i>' + `${this.globalSetApi.recConfirmText}` + '</i>',
             nzOkType: 'danger',
             nzOnOk: () => this.doBatchRec()
+        });
+    }
+
+    // 点击导出
+    onBtnBatchExpClick(): void {
+        this.modalService.confirm({
+            nzTitle: '<i>' + '您确认要导出吗？' + '</i>',
+            nzOkType: 'primary',
+            nzOnOk: () => this.doBatchExp()
         });
     }
 
@@ -174,6 +192,43 @@ export class EpuReSupplyListComponent implements OnInit, OnDestroy {
                         }
                     )
             );
+        } else {
+            this.messageService.warning('您未选择数据');
+        }
+    }
+
+    // 执行导出
+    doBatchExp() {
+        if (this.selectedBizIdString !== null && this.selectedBizIdString !== '') {
+            const postData = {
+                queryFields: '',
+                queryWhere: [
+                    {
+                        fieldName: 'bizId',
+                        operator: 'in',
+                        fieldValue: this.selectedBizIdString.substring(0, this.selectedBizIdString.length - 1),
+                    }
+                ],
+                queryOrder: 'supplierName',
+                pageIndex: 0,
+                pageSize: 0
+            };
+            const id = this.messageService.loading(this.globalSetApi.exportingText, { nzDuration: 0 }).messageId;
+            this.daoApi.doDownloadRequest(this.epuSetApi.ReSupplyExport, postData)
+                .subscribe(data => {
+                    this.messageService.remove(id);
+                    const link = document.createElement('a');
+                    const blob = new Blob([data.body], { type: 'text/csv' });
+                    link.setAttribute('href', window.URL.createObjectURL(blob));
+                    link.setAttribute('download', data.headers.get('Content-disposition').split('filename=')[1]);
+                    link.style.visibility = 'hidden';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    console.log(1);
+                }, error => {
+                    this.messageService.remove(id);
+                });
         } else {
             this.messageService.warning('您未选择数据');
         }

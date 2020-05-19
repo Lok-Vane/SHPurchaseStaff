@@ -140,7 +140,7 @@ export class EpuViePriceDetailsComponent implements OnInit, OnDestroy {
   }
 
   SHOW() {
-
+    this.message.create('success', '已开启实时查看');
     // this.ifClick = true;
     this.showbtn = false;
     this.close();

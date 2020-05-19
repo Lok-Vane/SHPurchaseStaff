@@ -37,7 +37,7 @@ export class EpuSecCategoryMixComponent implements OnInit, OnDestroy {
     // epuSecCategoryGrid_Grid
     @ViewChild('epuSecCategoryGrid', { static: true }) epuSecCategoryGrid: any;
     // epuSecCategoryGrid_Selectlist
-    selectEpuSecCategoryList: EpuSecCategory[];
+    selectEpuSecCategoryList: EpuSecCategory[] = [];
     // epuSecCategoryGrid_ColDef
     epuSecCategoryGridCols: ColDef[];
 
@@ -171,18 +171,22 @@ export class EpuSecCategoryMixComponent implements OnInit, OnDestroy {
 
     // 点击修改
     onBtnEditClick(): void {
-        this.subscriptions.push(
-            this.daoApi.doPostRequest(this.epuSetApi.SecCategoryModifyBef, this.epuSecCategoryForm.value.bizId).subscribe(
-                (res: any) => {
-                    if (res.status && res.status === 1) {
-                        this.isEditMode = true;
-                        this.isCreateMode = false;
-                        this.epuSecCategoryForm.patchValue(res.data);
-                        this.categoryFirstList = [];
+        if (this.selectEpuSecCategoryList.length !== 0) {
+            this.subscriptions.push(
+                this.daoApi.doPostRequest(this.epuSetApi.SecCategoryModifyBef, this.epuSecCategoryForm.value.bizId).subscribe(
+                    (res: any) => {
+                        if (res.status && res.status === 1) {
+                            this.isEditMode = true;
+                            this.isCreateMode = false;
+                            this.epuSecCategoryForm.patchValue(res.data);
+                            this.categoryFirstList = [];
+                        }
                     }
-                }
-            )
-        );
+                )
+            );
+        } else {
+            this.messageApi.create('warning', '未选中需要修改的数据！');
+        }
     }
 
     // 点击批量删除
