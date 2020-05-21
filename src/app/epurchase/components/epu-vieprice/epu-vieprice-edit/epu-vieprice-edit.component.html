@@ -176,7 +176,7 @@
                                 {{shared.Form2Copy[i].productName}}</div>
                         </td>
                         <td>
-                            <input nz-input disabled='true' style="width: 100px;" type="text"
+                            <input appCopyCut nz-input disabled='true' style="width: 100px;" type="text"
                                 [(ngModel)]="shared.Form2Copy[i].metering">
                         </td>
                         <td>
@@ -245,14 +245,12 @@
                                 [nzMin]="0" [nzStep]="1"></nz-input-number>
                         </td> -->
                         <td>
-                            <textarea nz-input style="width: 200px;" type="text"
-                                [(ngModel)]="shared.Form2Copy[i].reserve1" rows="1"
-                                oninput="value=value.replace(/\s+/g,'')"></textarea>
+                            <input appCopyCut nz-input style="width: 200px;" type="text" [(ngModel)]="shared.Form2Copy[i].reserve1"
+                                appSpaceDel>
                         </td>
                         <td>
-                            <textarea nz-input style="width: 200px;" type="text"
-                                [(ngModel)]="shared.Form2Copy[i].remark" rows="1"
-                                oninput="value=value.replace(/\s+/g,'')"></textarea>
+                            <input appCopyCut nz-input style="width: 200px;" type="text" [(ngModel)]="shared.Form2Copy[i].remark"
+                                appSpaceDel>
                         </td>
                     </tr>
                 </tbody>

@@ -25,6 +25,10 @@ import {
     EpuViePriceEditComponent,
     CountdownComponent,
 } from './components';
+import {
+    RemoveSpaceDirective,
+    CopyCutDirective
+} from './directives';
 
 @NgModule({
     declarations: [
@@ -49,7 +53,9 @@ import {
         EpuViePriceResultComponent,
         EpuViePriceAddComponent,
         EpuViePriceEditComponent,
-        CountdownComponent
+        CountdownComponent,
+        RemoveSpaceDirective,
+        CopyCutDirective
     ],
     imports: [
         EPurchaseRoutingModule,

@@ -81,6 +81,10 @@ export class EpuFirCategoryMixComponent implements OnInit, OnDestroy {
         GlobalToolService.autoUnSubscribe(this.subscriptions);
     }
 
+    // camelcase(str: string) {
+    //     return str.replace(/[0-9]/g, '').replace(/-/g, '');
+    // }
+
     // Grid选择变化
     onEpuFirCategoryGridSelectChange(params: any) {
         this.selectEpuFirCategoryList = params;

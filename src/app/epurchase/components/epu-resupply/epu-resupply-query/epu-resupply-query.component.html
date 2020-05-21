@@ -4,29 +4,27 @@
         <nz-form-item>
             <nz-form-label nzFor="supplierName" nzSpan="4">供应商</nz-form-label>
             <nz-form-control nzSpan="19">
-                <input [nzSize]="controlSize" nz-input id="supplierName" formControlName="supplierName"
-                    oninput="value=value.replace(/\s+/g,'')">
+                <input appCopyCut [nzSize]="controlSize" nz-input id="supplierName" formControlName="supplierName" appSpaceDel>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label nzFor="oneCategoryName" nzSpan="4">材料类别</nz-form-label>
             <nz-form-control nzSpan="19">
-                <input [nzSize]="controlSize" nz-input id="oneCategoryName" formControlName="oneCategoryName"
-                    oninput="value=value.replace(/\s+/g,'')">
+                <input appCopyCut [nzSize]="controlSize" nz-input id="oneCategoryName" formControlName="oneCategoryName"
+                    appSpaceDel>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label nzFor="orgName" nzSpan="4">供应组织</nz-form-label>
             <nz-form-control nzSpan="19">
-                <input [nzSize]="controlSize" nz-input id="orgName" formControlName="orgName"
-                    oninput="value=value.replace(/\s+/g,'')">
+                <input appCopyCut [nzSize]="controlSize" nz-input id="orgName" formControlName="orgName" appSpaceDel>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label nzFor="state" nzSpan="4">档案状态</nz-form-label>
             <nz-form-control nzSpan="19">
-                <!-- <input [nzSize]="controlSize" nz-input placeholder="0：已删除或已禁用；1：启用中" id="state" formControlName="state"
-                    oninput="value=value.replace(/\s+/g,'')"> -->
+                <!-- <input appCopyCut [nzSize]="controlSize" nz-input placeholder="0：已删除或已禁用；1：启用中" id="state" formControlName="state"
+                    appSpaceDel> -->
                 <nz-select [nzSize]="controlSize" style="width: 100%;" id="state" formControlName="state">
                     <nz-option *ngFor="let o of stateList" [nzValue]="o.value" [nzLabel]="o.label">
                     </nz-option>

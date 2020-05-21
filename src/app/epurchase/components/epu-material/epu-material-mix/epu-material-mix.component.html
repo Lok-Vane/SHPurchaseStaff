@@ -13,19 +13,19 @@
         <nz-form-item hidden="true">
             <nz-form-label nzFor="bizId" nzSpan="8" nzRequired>数据标识</nz-form-label>
             <nz-form-control nzSpan="15">
-                <input nz-input [nzSize]="controlSize" id="bizId" formControlName="bizId" readonly>
+                <input appCopyCut nz-input [nzSize]="controlSize" id="bizId" formControlName="bizId" readonly>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item hidden="true">
             <nz-form-label nzFor="sysVersion" nzSpan="8" nzRequired>数据版本</nz-form-label>
             <nz-form-control nzSpan="15">
-                <input nz-input [nzSize]="controlSize" id="sysVersion" formControlName="sysVersion" readonly>
+                <input appCopyCut nz-input [nzSize]="controlSize" id="sysVersion" formControlName="sysVersion" readonly>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label nzFor="code" nzSpan="8" nzRequired>编码</nz-form-label>
             <nz-form-control nzSpan="15">
-                <input nz-input [nzSize]="controlSize" id="code" formControlName="code" disabled>
+                <input appCopyCut nz-input [nzSize]="controlSize" id="code" formControlName="code" disabled>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
@@ -43,60 +43,60 @@
         <nz-form-item>
             <nz-form-label nzFor="productName" nzSpan="8" nzRequired>名称</nz-form-label>
             <nz-form-control nzSpan="15">
-                <input nz-input [nzSize]="controlSize" id="productName" formControlName="productName"
+                <input appCopyCut nz-input [nzSize]="controlSize" id="productName" formControlName="productName"
                     [disabled]="!isEditMode" [readonly]="!isEditMode">
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label nzFor="specifications" nzSpan="8" nzRequired>规格型号</nz-form-label>
             <nz-form-control nzSpan="15">
-                <input nz-input [nzSize]="controlSize" id="specifications" formControlName="specifications"
-                    [disabled]="!isEditMode" [readonly]="!isEditMode" oninput="value=value.replace(/\s+/g,'')">
+                <input appCopyCut nz-input [nzSize]="controlSize" id="specifications" formControlName="specifications"
+                    [disabled]="!isEditMode" [readonly]="!isEditMode" appSpaceDel>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label nzFor="metering" nzSpan="8" nzRequired>计量单位</nz-form-label>
             <nz-form-control nzSpan="15">
-                <input nz-input [nzSize]="controlSize" id="metering" formControlName="metering" [disabled]="!isEditMode"
-                    [readonly]="!isEditMode" oninput="value=value.replace(/\s+/g,'')">
+                <input appCopyCut nz-input [nzSize]="controlSize" id="metering" formControlName="metering" [disabled]="!isEditMode"
+                    [readonly]="!isEditMode" appSpaceDel>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label nzFor="productBrand" nzSpan="8">品牌</nz-form-label>
             <nz-form-control nzSpan="15">
-                <input nz-input [nzSize]="controlSize" id="productBrand" formControlName="productBrand"
-                    [disabled]="!isEditMode" [readonly]="!isEditMode" oninput="value=value.replace(/\s+/g,'')">
+                <input appCopyCut nz-input [nzSize]="controlSize" id="productBrand" formControlName="productBrand"
+                    [disabled]="!isEditMode" [readonly]="!isEditMode" appSpaceDel>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label nzFor="remark" nzSpan="8">备注</nz-form-label>
             <nz-form-control nzSpan="15">
-                <input nz-input [nzSize]="controlSize" id="remark" formControlName="remark" [disabled]="!isEditMode"
-                    [readonly]="!isEditMode" oninput="value=value.replace(/\s+/g,'')">
+                <input appCopyCut nz-input [nzSize]="controlSize" id="remark" formControlName="remark" [disabled]="!isEditMode"
+                    [readonly]="!isEditMode" appSpaceDel>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label nzFor="createdByName" nzSpan="8" nzRequired>创建人</nz-form-label>
             <nz-form-control nzSpan="15">
-                <input nz-input [nzSize]="controlSize" id="createdByName" formControlName="createdByName" disabled>
+                <input appCopyCut nz-input [nzSize]="controlSize" id="createdByName" formControlName="createdByName" disabled>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label nzFor="createdTime" nzSpan="8" nzRequired>创建时间</nz-form-label>
             <nz-form-control nzSpan="15">
-                <input nz-input [nzSize]="controlSize" id="createdTime" formControlName="createdTime" disabled>
+                <input appCopyCut nz-input [nzSize]="controlSize" id="createdTime" formControlName="createdTime" disabled>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label nzFor="modifyByName" nzSpan="8">修改人</nz-form-label>
             <nz-form-control nzSpan="15">
-                <input nz-input [nzSize]="controlSize" id="modifyByName" formControlName="modifyByName" disabled>
+                <input appCopyCut nz-input [nzSize]="controlSize" id="modifyByName" formControlName="modifyByName" disabled>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label nzFor="modifyTime" nzSpan="8">修改时间</nz-form-label>
             <nz-form-control nzSpan="15">
-                <input nz-input [nzSize]="controlSize" id="modifyTime" formControlName="modifyTime" disabled>
+                <input appCopyCut nz-input [nzSize]="controlSize" id="modifyTime" formControlName="modifyTime" disabled>
             </nz-form-control>
         </nz-form-item>
     </form>

@@ -5,7 +5,7 @@
             <nz-form-item>
                 <nz-form-label [nzFor]="item.field" nzSpan="8">{{item.label}}</nz-form-label>
                 <nz-form-control nzSpan="15">
-                    <input *ngIf="item.type==='INPUT'" nz-input [id]="item.field" [formControlName]="item.field"
+                    <input appCopyCut *ngIf="item.type==='INPUT'" nz-input [id]="item.field" [formControlName]="item.field"
                         [placeholder]="item.placeholder">
                     <nz-date-picker *ngIf="item.type==='DATEPICKER'" [formControlName]="item.field" [id]="item.field"
                         [nzPlaceHolder]="item.placeholder" [nzFormat]="item.format">

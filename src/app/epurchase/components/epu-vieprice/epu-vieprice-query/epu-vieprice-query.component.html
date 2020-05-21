@@ -4,35 +4,32 @@
         <nz-form-item>
             <nz-form-label nzFor="projectName" nzSpan="4">项目名称</nz-form-label>
             <nz-form-control nzSpan="19">
-                <input [nzSize]="controlSize" nz-input id="projectName" formControlName="projectName"
-                    oninput="value=value.replace(/\s+/g,'')">
+                <input appCopyCut [nzSize]="controlSize" nz-input id="projectName" formControlName="projectName" appSpaceDel>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label nzFor="orgName" nzSpan="4">组织名称</nz-form-label>
             <nz-form-control nzSpan="19">
-                <input [nzSize]="controlSize" nz-input id="orgName" formControlName="orgName"
-                    oninput="value=value.replace(/\s+/g,'')">
+                <input appCopyCut [nzSize]="controlSize" nz-input id="orgName" formControlName="orgName" appSpaceDel>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label nzFor="productName" nzSpan="4">材料名称</nz-form-label>
             <nz-form-control nzSpan="19">
-                <input [nzSize]="controlSize" nz-input id="productName" formControlName="productName">
+                <input appCopyCut [nzSize]="controlSize" nz-input id="productName" formControlName="productName">
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label nzFor="specifications" nzSpan="4">规格型号</nz-form-label>
             <nz-form-control nzSpan="19">
-                <input [nzSize]="controlSize" nz-input id="specifications" formControlName="specifications"
-                    oninput="value=value.replace(/\s+/g,'')">
+                <input appCopyCut [nzSize]="controlSize" nz-input id="specifications" formControlName="specifications" appSpaceDel>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
             <nz-form-label nzFor="isSuccess" nzSpan="4">项目状态</nz-form-label>
             <nz-form-control nzSpan="19">
-                <!-- <input [nzSize]="controlSize" nz-input placeholder="1：竞价中；2：竞价成功；3：无合格报价" id="isSuccess"
-                    formControlName="isSuccess" oninput="value=value.replace(/\s+/g,'')"> -->
+                <!-- <input appCopyCut [nzSize]="controlSize" nz-input placeholder="1：竞价中；2：竞价成功；3：无合格报价" id="isSuccess"
+                    formControlName="isSuccess" appSpaceDel> -->
                 <nz-select [nzSize]="controlSize" style="width: 100%;" id="isSuccess" formControlName="isSuccess">
                     <nz-option *ngFor="let o of isSuccessList" [nzValue]="o.value" [nzLabel]="o.label">
                     </nz-option>

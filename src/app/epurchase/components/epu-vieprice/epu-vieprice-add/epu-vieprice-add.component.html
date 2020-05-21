@@ -48,7 +48,7 @@
             <nz-descriptions-item nzTitle="项目名称">
                 <span style="display:flex; align-items:center">
                     <strong style="color: red;">*&nbsp;</strong>
-                    <input readonly nz-input [(ngModel)]="shared.Form1.projectName" style="min-width: 150px;">
+                    <input appCopyCut readonly nz-input [(ngModel)]="shared.Form1.projectName" style="min-width: 150px;">
                 </span>
             </nz-descriptions-item>
 
@@ -223,7 +223,7 @@
                             </nz-select>
                         </td>
                         <td>
-                            <input nz-input readonly style="width: 100px;" type="text"
+                            <input appCopyCut nz-input readonly style="width: 100px;" type="text"
                                 [(ngModel)]="shared.Form2[i].metering">
                         </td>
                         <td>
@@ -294,12 +294,12 @@
                                 (ngModelChange)='meteringChange(i)'></nz-input-number>
                         </td> -->
                         <td>
-                            <textarea nz-input style="width: 200px;" type="text" [(ngModel)]="shared.Form2[i].reserve1"
-                                rows="1" oninput="value=value.replace(/\s+/g,'')"></textarea>
+                            <input appCopyCut nz-input style="width: 200px;" type="text" [(ngModel)]="shared.Form2[i].reserve1"
+                                appSpaceDel>
                         </td>
                         <td>
-                            <textarea nz-input style="width: 200px;" type="text" [(ngModel)]="shared.Form2[i].remark"
-                                rows="1" oninput="value=value.replace(/\s+/g,'')"></textarea>
+                            <input appCopyCut nz-input style="width: 200px;" type="text" [(ngModel)]="shared.Form2[i].remark"
+                                appSpaceDel>
                         </td>
                     </tr>
                 </tbody>
